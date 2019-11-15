@@ -21,8 +21,8 @@ ReactDOM.render(
                 zIndex: 1,
                 textShadow:'1px 1px white'               
             }}>
-            <h1 style={{margin:0}}>Querator AI</h1>
-            <span>present by UDIC</span>
+            <h1 style={{margin:0,fontFamily:'Vollkorn SC,serif'}}>Querator AI</h1>
+            <span style={{fontFamily:'Vollkorn SC,serif'}}>present by UDIC</span>
         </div>
 
         <App key={"1"} R={true} />

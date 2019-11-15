@@ -6,13 +6,15 @@ body {
   width: 100%;
   padding: 0;
   margin: 0;
+  font-family: 'Noto Sans TC', sans-serif;
 }
 
 .box {
-  width: 220px;
-  height: 40px;
+  width: 500px;
+  height: 45px;
   background: #ff1c68;
   transform-origin: 50% 50%;
   border: 0.5px #ccc solid;
-  box-shadow: 2px 2px #ccc;
+  box-shadow: 1px 1px #ccc;
+  border-radius: 40px;
 }

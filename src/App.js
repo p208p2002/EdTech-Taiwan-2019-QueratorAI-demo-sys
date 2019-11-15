@@ -10,22 +10,25 @@ const Box = posed.div({
   hidden: { 
     opacity: 0, 
     scale: 0.01, 
-    transition: () => ({ delay: randRange(1000),duration: 500 })
+    transition: () => ({ delay: randRange(1000),duration: 800 })
     },
   visible: { 
     opacity: 1, 
     scale: 1.0, 
-    transition: () => ({ delay: randRange(1000),duration: 500 })
+    transition: () => ({ delay: randRange(1000),duration: 800 })
    },
 });
 
 class Example extends React.Component {
-  state = {
-    isVisible: true,
-    boxsNumbes: 15,
-    xs:[],
-    ys:[],
-  };
+  constructor(props){
+    super(props)
+    this.state = {
+      isVisible: true,
+      boxsNumbes: 12,
+      xs:[],
+      ys:[],
+    };
+  }
 
   componentDidMount() {
     setInterval(() => {
@@ -35,8 +38,8 @@ class Example extends React.Component {
       let ys = []
       
       for(var i=0;i<boxsNumbes;i++){
-        xs.push(randRange(window.innerWidth,220)-220)
-        ys.push(randRange(window.innerHeight,40)-40)        
+        xs.push(randRange(window.innerWidth,500)-500)
+        ys.push(randRange(window.innerHeight,45)-45)        
       }
 
       if(!R){
@@ -68,7 +71,7 @@ class Example extends React.Component {
         }
       }
       
-    }, 2500);
+    }, 3500);
   }
 
   boxs(){
@@ -81,10 +84,18 @@ class Example extends React.Component {
         style={{
           position:'absolute',
           left:`${xs[i]}px`,
-          top:`${ys[i]}px`
+          top:`${ys[i]}px`,
         }}
         className="box" 
-        pose={R?isVisible ? 'hidden' : 'visible':isVisible ? 'visible' : 'hidden'} />)
+        pose={R?isVisible ? 'hidden' : 'visible':isVisible ? 'visible' : 'hidden'}>
+          <div style={{ 
+            width:'100%',
+            height:'100%',
+            textAlign:'center',
+            lineHeight:'45px',
+            color:'white',
+            fontSize:20 }}>測試文字測試文字測試文字測試文字測試文字</div>
+        </Box>)
     }
     return boxs
   }
