@@ -24,10 +24,44 @@ class Example extends React.Component {
     super(props)
     this.state = {
       isVisible: true,
-      boxsNumbes: 12,
+      boxsNumbes: 15,
       xs:[],
       ys:[],
+      ysRange:[]
     };
+    this.boxs = this.boxs.bind(this)
+    this.resetOrMakeYsPosition = this.resetOrMakeYsPosition.bind(this)
+    this.getYPostion = this.getYPostion.bind(this)
+  }
+
+  resetOrMakeYsPosition(gap=3){
+    let boxHeight = 45
+    let heightLimit = window.innerHeight
+    let ysRange = []
+    for (var i=boxHeight;i<=heightLimit-boxHeight;i+=gap){
+      ysRange.push(i)
+    }
+    this.setState({
+      ysRange
+    })
+  }
+
+  getYPostion(){
+    let { ysRange } = this.state
+    let ysRangeLen = ysRange.length
+
+    let yRange = -1
+    let ysRangeIndex = -1
+    while(yRange === -1){
+      ysRangeIndex = Math.round(randRange(ysRangeLen-1,0))
+      // console.log(ysRangeIndex)
+      yRange = ysRange[ysRangeIndex]
+    }
+    ysRange[ysRangeIndex] = -1
+    this.setState({
+      ysRange
+    })
+    return yRange
   }
 
   componentDidMount() {
@@ -36,10 +70,14 @@ class Example extends React.Component {
       let {isVisible,boxsNumbes} = this.state
       let xs = []
       let ys = []
+
+      this.resetOrMakeYsPosition(50)
+      let yPosttion = 0
       
       for(var i=0;i<boxsNumbes;i++){
+        yPosttion = this.getYPostion()
         xs.push(randRange(window.innerWidth,500)-500)
-        ys.push(randRange(window.innerHeight,45)-45)        
+        ys.push(yPosttion)        
       }
 
       if(!R){

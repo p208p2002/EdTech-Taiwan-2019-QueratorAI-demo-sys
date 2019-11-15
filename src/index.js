@@ -26,7 +26,7 @@ ReactDOM.render(
         </div>
 
         <App key={"1"} R={true} />
-        <App key={"1"} R={false} />
+        <App key={"2"} R={false} />
     </div>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
