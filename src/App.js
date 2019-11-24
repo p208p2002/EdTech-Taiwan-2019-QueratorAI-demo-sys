@@ -1,6 +1,7 @@
 import React from 'react';
 import posed from 'react-pose';
 import './App.css';
+import testData from './test.json'
 
 const randRange = (max,min=1)=>{
   return Math.random() * (max - min) + min;
@@ -32,6 +33,7 @@ class Example extends React.Component {
     this.boxs = this.boxs.bind(this)
     this.resetOrMakeYsPosition = this.resetOrMakeYsPosition.bind(this)
     this.getYPostion = this.getYPostion.bind(this)
+    this.testData = testData
   }
 
   resetOrMakeYsPosition(gap=3){
