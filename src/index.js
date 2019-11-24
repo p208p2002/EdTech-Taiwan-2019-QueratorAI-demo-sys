@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Manager from './Manager';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
@@ -19,14 +19,12 @@ ReactDOM.render(
                 right: '5%',
                 bottom: '5%',
                 zIndex: 1,
-                textShadow:'1px 1px white'               
+                textShadow: '1px 1px white'
             }}>
-            <h1 style={{margin:0,fontFamily:'Vollkorn SC,serif'}}>Querator AI</h1>
-            <span style={{fontFamily:'Vollkorn SC,serif'}}>present by UDIC</span>
+            <h1 style={{ margin: 0, fontFamily: 'Vollkorn SC,serif' }}>Querator AI</h1>
+            <span style={{ fontFamily: 'Vollkorn SC,serif' }}>present by UDIC</span>
         </div>
-
-        <App key={"1"} R={true} />
-        <App key={"2"} R={false} />
+        <Manager/>
     </div>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
