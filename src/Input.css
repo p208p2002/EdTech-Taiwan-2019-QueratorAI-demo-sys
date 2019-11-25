@@ -65,7 +65,7 @@ p {
 .button {
     margin:  0 auto;
 	position: relative;
-	height: 60px;
+	height: 40px;
 	width: 200px;
 	background: #00BCD4;
 	border-radius: 8px;
@@ -88,13 +88,13 @@ p {
 
 .submit {
 	text-transform: uppercase;
-	margin: 0px 0 0 26px;
+	margin: 10px 0 0 26px;
 }
 
 .arrow {
 	position: relative;
     top: 3px;
-    left: 20px;
+    left: 30px;
     opacity: 0;
     /* margin: 0 auto; */
 }
@@ -165,4 +165,30 @@ p {
 
 .button.active .bottom {
 	margin: 14px 0 0 12px;
+}
+
+/*  */
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700);
+.wrapper input {
+	box-sizing: border-box;
+	font-size: 13px;
+	vertical-align: top;
+}
+
+.wrapper {
+	text-align: center;
+	position: relative;
+	height: 40px;
+	font-size: 0;
+	top: 50%;
+}
+
+.search {
+	padding: 0 30px;
+	font-size: 18px;
+	width: 300px;
+	max-width: 400px;
+	height: 40px;
+	border: 1px solid darken(white, 30%);
+	border-radius: 20px 20px 20px 20px;
 }

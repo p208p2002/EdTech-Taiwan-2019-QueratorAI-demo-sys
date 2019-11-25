@@ -22,9 +22,9 @@ class InputView extends Component {
 
         function active() {
             $(".button").on("click", function () {
-                setTimeout(()=>{
+                setTimeout(() => {
                     $(this).removeClass("active");
-                },1500)
+                }, 1500)
                 return $(this).addClass("active");
             });
         }
@@ -41,13 +41,15 @@ class InputView extends Component {
                 <div className="container">
                     <h1>Querator AI</h1>
                     <h3>隨便打個關鍵字吧!</h3>
-                    <input type="text" />
-                    
-                    <br/>
-                    <br/>
+                    {/* <input type="text" /> */}
+                    <div className="wrapper">
+                        <input className="search" type="text" id="search" />
+                    </div>
+
+                    <br />
                     {/*  */}
                     <div className="button">
-                        <div className="submit"><h3>Submit</h3></div>
+                        <div className="submit"><span>Submit</span></div>
                         <div className="arrow">
                             <div className="top line"></div>
                             <div className="bottom line"></div>
