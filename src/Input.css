@@ -29,17 +29,17 @@
 	text-align: center;
 }
 
-/* h1 {
-    font-weight: 300;
+#InputView h1 {
+	text-shadow: 2px 2px #434a54;
     
-} */
+}
 
-h3 {
+#InputView h3 {
 	color: #eee;
 	font-weight: 100;
 }
 
-h5 {
+#InputView h5 {
 	color:#eee;
 	font-weight:300;
 }
@@ -66,7 +66,7 @@ p {
     margin:  0 auto;
 	position: relative;
 	height: 40px;
-	width: 200px;
+	width: 220px;
 	background: #00BCD4;
 	border-radius: 8px;
 	text-align: center;
@@ -76,6 +76,7 @@ p {
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
 	transition: all 0.3s ease;
+	/* box-shadow: 1px 1px 1px gray; */
 }
 
 .submit,
@@ -89,6 +90,10 @@ p {
 .submit {
 	text-transform: uppercase;
 	margin: 10px 0 0 26px;
+}
+
+.submit span{
+	font-size: 16px;
 }
 
 .arrow {
@@ -171,7 +176,7 @@ p {
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700);
 .wrapper input {
 	box-sizing: border-box;
-	font-size: 13px;
+	font-size: 22px;
 	vertical-align: top;
 }
 
@@ -180,7 +185,8 @@ p {
 	position: relative;
 	height: 40px;
 	font-size: 0;
-	top: 50%;
+	/* top: 50%; */
+	margin-top: 35px;
 }
 
 .search {
