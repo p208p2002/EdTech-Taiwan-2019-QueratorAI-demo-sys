@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Box from './Box';
 import testData from './test.json'
 
-const randRange = (max, min = 1) => {
-    return Math.random() * (max - min) + min;
-}
+// const randRange = (max, min = 1) => {
+//     return Math.random() * (max - min) + min;
+// }
 
 class Manager extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ class Manager extends Component {
     }
 
     render() {
-        let { questions } = this
+        // let { questions } = this
         let boxOffset = 10
         let boxHeight = 45 + boxOffset
         let numberOfBoxs = parseInt((window.innerHeight) / (boxHeight)) - 1
