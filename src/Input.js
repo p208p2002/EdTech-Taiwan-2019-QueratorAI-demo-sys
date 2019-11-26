@@ -40,7 +40,7 @@ class InputView extends Component {
             <div id="InputView">
                 <div className="container">
                     <h1>Querator AI</h1>
-                    <h3>隨便打個關鍵字吧!</h3>
+                    <h3>隨意輸入關鍵字吧!</h3>
                     {/* <input type="text" /> */}
                     <div className="wrapper">
                         <input className="search" type="text" id="search" />

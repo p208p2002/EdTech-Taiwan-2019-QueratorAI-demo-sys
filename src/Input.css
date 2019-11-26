@@ -22,7 +22,7 @@
 	}
 }
 
-.container {
+#InputView .container {
 	width: 100%;
 	position: absolute;
 	top: 35%;
@@ -44,8 +44,8 @@
 	font-weight:300;
 }
 
-a,
-a:hover {
+#InputView a,
+#InputView a:hover {
 	text-decoration: none;
 	color: #ddd;
 }
@@ -55,14 +55,14 @@ a:hover {
 
 
 
-p {
+#InputView p {
 	color: #00BCD4;
 	font-family: Raleway, Helvetica, sans-serif;
 	font-size: 1.2rem;
 	font-weight: 400;
 }
 
-.button {
+#InputView .button {
     margin:  0 auto;
 	position: relative;
 	height: 40px;
@@ -79,24 +79,24 @@ p {
 	/* box-shadow: 1px 1px 1px gray; */
 }
 
-.submit,
-.arrow {
+#InputView .submit,
+#InputView .arrow {
 	display: inline-block;
 	-webkit-transition: all 0.2s ease;
 	-moz-transition: all 0.2s ease;
 	transition: all 0.2s ease;
 }
 
-.submit {
+#InputView .submit {
 	text-transform: uppercase;
 	margin: 10px 0 0 26px;
 }
 
-.submit span{
+#InputView .submit span{
 	font-size: 16px;
 }
 
-.arrow {
+#InputView .arrow {
 	position: relative;
     top: 3px;
     left: 30px;
@@ -104,83 +104,83 @@ p {
     /* margin: 0 auto; */
 }
 
-.line {
+#InputView .line {
 	height: 3px;
 	width: 20px;
 	border-radius: 6px;
 	background: #fff;
 }
 
-.top {
+#InputView .top {
 	-webkit-transform: rotate(45deg);
 	-moz-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
 
-.bottom {
+#InputView .bottom {
 	-webkit-transform: rotate(-45deg);
 	-moz-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 	margin-top: 10px;
 }
 
-.instructions {
+#InputView .instructions {
 	text-align: center;
 	margin: 20px auto;
 }
 
-.button:active {
+#InputView .button:active {
 	-webkit-transform: scale(1.3);
 	-moz-transform: scale(1.3);
 	transform: scale(1.3);
 }
 
-.button.hover .submit {
+#InputView .button.hover .submit {
 	-webkit-transform: translateX(-90px);
 	-moz-transform: translateX(-90px);
 	transform: translateX(-90px);
 	opacity: 0;	
 }
 
-.button.hover .arrow {
+#InputView .button.hover .arrow {
 	-webkit-transform: translateX(-70px);
 	-moz-transform: translateX(-70px);
 	transform: translateX(-70px);
 	opacity: 1;
 }
 
-.button.active .arrow {
+#InputView .button.active .arrow {
 	opacity: 1;
 	-webkit-transform: rotate(90deg) translateY(70px);
 	-moz-transform: rotate(90deg) translateY(70px);
 	transform: rotate(90deg) translateY(70px);
 }
 
-.button.active {
+#InputView .button.active {
 	background: #4CAF50;
 }
 
-.button.active .submit {
+#InputView .button.active .submit {
 	opacity: 0;
 }
 
-.button.active .top {
+#InputView .button.active .top {
 	width: 34px;
 }
 
-.button.active .bottom {
+#InputView .button.active .bottom {
 	margin: 14px 0 0 12px;
 }
 
 /*  */
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700);
-.wrapper input {
+#InputView .wrapper input {
 	box-sizing: border-box;
 	font-size: 22px;
 	vertical-align: top;
 }
 
-.wrapper {
+#InputView .wrapper {
 	text-align: center;
 	position: relative;
 	height: 40px;
@@ -189,7 +189,7 @@ p {
 	margin-top: 35px;
 }
 
-.search {
+#InputView .search {
 	padding: 0 30px;
 	font-size: 18px;
 	width: 300px;
