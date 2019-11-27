@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './index.css'
 var $ = require("jquery");
+const axios = require('axios');
 class InputView extends Component {
     constructor(props) {
         super(props);
@@ -41,7 +42,7 @@ class InputView extends Component {
     }
 
     submit(e) {
-        let { recentSearch,keyword } = this.state
+        let { recentSearch, keyword } = this.state
         if (recentSearch.indexOf(keyword) === -1) {
             recentSearch.pop()
             recentSearch.unshift(keyword)
@@ -56,6 +57,15 @@ class InputView extends Component {
                 submitDisable: false
             })
         }, 3000)
+        axios.post('http://140.120.13.250:5002/generate-question', {
+            key: keyword
+        }, { headers: { 'Content-Type': 'application/json; charset=utf-8' } })
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((res) => {
+                console.log(res)
+            })
     }
 
     render() {
