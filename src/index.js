@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Manager from './Manager';
-import InputView from './Input.js'
+import QGWall from './models/QGWallModel';
+import InputView from './models/InputModel/index.js'
 import * as serviceWorker from './serviceWorker';
 var Url = require('url-parse');
 
@@ -48,7 +48,7 @@ ReactDOM.render(
                 <br />
                 <a href="/?mode=in">輸入介面</a>
             </div>
-            : mode === 'out' ? <Manager /> : <InputView/>}
+            : mode === 'out' ? <QGWall /> : <InputView/>}
     </div >, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

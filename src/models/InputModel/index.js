@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Input.css'
+import './index.css'
 var $ = require("jquery");
 class InputView extends Component {
     constructor(props) {

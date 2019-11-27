@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Box from './Box';
-import testData from './test.json'
+import Box from './Box.js';
+import testData from '../../asset/test.json'
 
 // const randRange = (max, min = 1) => {
 //     return Math.random() * (max - min) + min;
