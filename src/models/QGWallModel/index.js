@@ -43,7 +43,7 @@ class Manager extends Component {
 				this.setState({
 					showRunner:false
 				})
-			},6200)
+			},6500)
 		}
 		this.setState({
 			textRunnerStack
@@ -82,7 +82,9 @@ class Manager extends Component {
 			var newdata = this.getRandomCoolData()
 			dataStack.pop()
 			dataStack.unshift(newdata)
-			textRunnerStack.unshift(newdata)
+			if(textRunnerStack.length <= 100){
+				textRunnerStack.unshift(newdata)
+			}
 			this.setState({
 				dataStack,
 				textRunnerStack

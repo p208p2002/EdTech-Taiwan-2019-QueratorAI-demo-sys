@@ -36,12 +36,14 @@ body {
     animation-name: high-light-block;
     animation-duration: 6.5s;
     animation-timing-function: cubic-bezier(0, .79, .37, .26);
+    visibility: hidden;
 }
 
 @keyframes high-light-block {
     0% {
         height: 0px;
         top: calc(50% - 80px);
+        visibility: visible;
     }
     40% {
         height: 160px;
@@ -67,14 +69,16 @@ body {
     animation-name: runnung-text;
     animation-duration: 6s;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
-    top: calc(50% - 25px)
+    top: calc(50% - 25px);
+    visibility: hidden;
 }
 
 @keyframes runnung-text {
     0% {
+        visibility: visible;
         left: -50%;
     }
     100% {
-        left: calc(100% - 50%)
+        left: calc(100% - 50%);
     }
 }
