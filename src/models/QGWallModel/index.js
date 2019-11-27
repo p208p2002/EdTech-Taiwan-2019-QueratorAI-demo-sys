@@ -105,7 +105,8 @@ class Manager extends Component {
 			// $('#log').append('<p>question: ' + msg.data + '</p>');
 			console.log(msg)
 			console.log(msg.data)
-        });
+		});
+	
 	}
 
 	UNSAFE_componentWillMount() {
