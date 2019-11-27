@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Box from './Box.js';
 import cool_data from '../../asset/cool_data.json'
 import './index.css'
+import openSocket from 'socket.io-client';
+// const io = require('socket.io');
 
 let boxOffset = 10
 let boxHeight = 45 + boxOffset
@@ -37,7 +39,7 @@ class Manager extends Component {
 		this.setState({
 			textRunnerStack
 		})
-		console.log('execTextRunner',textRunnerStack,data)
+		// console.log('execTextRunner',textRunnerStack,data)
 		if (data) {
 			this.setState({
 				showRunner:true,
@@ -71,28 +73,39 @@ class Manager extends Component {
 		for (var i = 0; i < numberOfBoxs; i++) {
 			dataStack.unshift(this.getRandomCoolData())
 		}
-		console.log(dataStack)
+		// console.log(dataStack)
 		this.setState({
 			dataStack
 		})
 	}
 
 	connectSocket() {
-		setInterval(() => {
-			var { dataStack, textRunnerStack } = this.state
-			var newdata = this.getRandomCoolData()
-			dataStack.pop()
-			dataStack.unshift(newdata)
-			if(textRunnerStack.length <= 100){
-				textRunnerStack.unshift(newdata)
-			}
-			this.setState({
-				dataStack,
-				textRunnerStack
-			})
-			// console.log(dataStack)
-			console.log('textRunnerStack length',textRunnerStack.length)
-		}, 2000)
+		// setInterval(() => {
+		// 	var { dataStack, textRunnerStack } = this.state
+		// 	var newdata = this.getRandomCoolData()
+		// 	dataStack.pop()
+		// 	dataStack.unshift(newdata)
+		// 	if(textRunnerStack.length <= 100){
+		// 		textRunnerStack.unshift(newdata)
+		// 	}
+		// 	this.setState({
+		// 		dataStack,
+		// 		textRunnerStack
+		// 	})
+		// 	// console.log(dataStack)
+		// 	console.log('textRunnerStack length',textRunnerStack.length)
+		// }, 2000)
+	
+		let socket = openSocket.connect('http://140.120.13.250:5002')
+		socket.on('connect', function() {
+            socket.emit('connect_event', {data: 'connected!'});
+        })
+
+        socket.on('server_response', function(msg) {
+			// $('#log').append('<p>question: ' + msg.data + '</p>');
+			console.log(msg)
+			console.log(msg.data)
+        });
 	}
 
 	UNSAFE_componentWillMount() {

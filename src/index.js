@@ -18,7 +18,7 @@ function parseQuery(queryString) {
 
 var url = new Url(window.location.href);
 var { mode = 'unset' } = parseQuery(url.query)
-console.log(mode)
+// console.log(mode)
 
 ReactDOM.render(
     <div style={{
