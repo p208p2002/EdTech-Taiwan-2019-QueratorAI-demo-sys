@@ -97,14 +97,24 @@ class Manager extends Component {
 		// }, 2000)
 	
 		let socket = openSocket.connect('http://140.120.13.250:5002')
-		socket.on('connect', function() {
-            socket.emit('connect_event', {data: 'connected!'});
-        })
+		// socket.on('connect', function() {
+        //     socket.emit('connect_event', {data: 'connected!'});
+        // })
 
+		let self = this
         socket.on('server_response', function(msg) {
-			// $('#log').append('<p>question: ' + msg.data + '</p>');
-			console.log(msg)
 			console.log(msg.data)
+			var { dataStack, textRunnerStack } = self.state
+			let newdata = msg.data
+			dataStack.pop()
+			dataStack.unshift(newdata)
+			if(textRunnerStack.length <= 100){
+				textRunnerStack.unshift(newdata)
+			}
+			self.setState({
+				dataStack,
+				textRunnerStack
+			})
 		});
 	
 	}
@@ -122,7 +132,6 @@ class Manager extends Component {
 			this.updateBoxDataFromDataStack()
 		}, 7000)
 		setInterval(() => {
-			console.log('exec')
 			this.execTextRunner()
 		}, 7000)
 	}
