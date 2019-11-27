@@ -43,7 +43,7 @@ class Manager extends Component {
 				this.setState({
 					showRunner:false
 				})
-			},6500)
+			},6200)
 		}
 		this.setState({
 			textRunnerStack
@@ -121,9 +121,9 @@ class Manager extends Component {
 		let { showRunner,textRunnerText } = this.state
 		return (
 			<div id="Wall">
-				<div className={`high-light ${showRunner ? '' : 'hidden'}`}></div>
-		<div className={`high-light-text ${showRunner ? '' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
-				<div style={{ marginTop }}>
+				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>
+		<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
+				<div>
 					{boxs}
 				</div>
 			</div>
