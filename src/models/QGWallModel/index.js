@@ -34,7 +34,11 @@ class Manager extends Component {
 	execTextRunner() {
 		let { textRunnerStack } = this.state
 		let data = textRunnerStack.pop()
-		if (textRunnerStack.length > 0) {
+		this.setState({
+			textRunnerStack
+		})
+		console.log('execTextRunner',textRunnerStack,data)
+		if (data) {
 			this.setState({
 				showRunner:true,
 				textRunnerText:data
@@ -45,9 +49,6 @@ class Manager extends Component {
 				})
 			},6500)
 		}
-		this.setState({
-			textRunnerStack
-		})
 	}
 
 	getRandomCoolData() {
@@ -90,7 +91,7 @@ class Manager extends Component {
 				textRunnerStack
 			})
 			// console.log(dataStack)
-			console.log(textRunnerStack.length)
+			console.log('textRunnerStack length',textRunnerStack.length)
 		}, 2000)
 	}
 
@@ -107,8 +108,9 @@ class Manager extends Component {
 			this.updateBoxDataFromDataStack()
 		}, 7000)
 		setInterval(() => {
+			console.log('exec')
 			this.execTextRunner()
-		}, 8000)
+		}, 7000)
 	}
 
 	updateBoxDataFromDataStack() {

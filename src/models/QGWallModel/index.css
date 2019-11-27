@@ -26,7 +26,7 @@ body {
 
 #Wall .high-light {
     position: absolute;
-    background-color: rgba(100, 100, 100, 0.7);
+    background-color: rgba(150, 150, 150, 0.7);
     width: 100%;
     height: 160px;
     z-index: 1;
@@ -34,7 +34,7 @@ body {
     line-height: 50px;
     top: calc(50% - 80px);
     animation-name: high-light-block;
-    animation-duration: 6.5s;
+    animation-duration: 6.3s;
     animation-timing-function: cubic-bezier(0, .79, .37, .26);
     visibility: hidden;
 }
@@ -49,7 +49,7 @@ body {
         height: 160px;
         top: calc(50% - 80px);
     }
-    97% {
+    95% {
         height: 160px;
         top: calc(50% - 80px);
     }
