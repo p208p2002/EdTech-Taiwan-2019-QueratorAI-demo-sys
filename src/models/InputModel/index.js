@@ -6,9 +6,10 @@ class InputView extends Component {
         super(props);
         this.state = {
             keyword: '',
-            submitDisable:false
+            recentSearch: ['韓國瑜', '蔡英文', '柯文哲', '周杰倫', '蔡英文'],
+            submitDisable: false
         };
-        this.submit = React.createRef
+        this.submitBtn = React.createRef
     }
 
     componentDidMount() {
@@ -39,13 +40,12 @@ class InputView extends Component {
     }
 
     render() {
-        let { keyword,submitDisable } = this.state
+        let { keyword, submitDisable, recentSearch } = this.state
         return (
             <div id="InputView">
                 <div className="container">
                     <h1>Querator AI</h1>
                     <h3>隨意輸入關鍵字吧!</h3>
-                    {/* <input type="text" /> */}
                     <div className="wrapper">
                         <input
                             className="search"
@@ -58,31 +58,54 @@ class InputView extends Component {
                                 })
                             }}
                             onKeyDown={(e) => {
-                                if(!submitDisable){
+                                if (!submitDisable) {
                                     if (e.key === 'Enter') {
-                                        this.submit.click()
+                                        this.submitBtn.click()
                                     }
                                 }
                             }}
                         />
                     </div>
 
+                    <div style={{ marginTop: 15 }}>
+                        <span className="s-first">最近搜尋</span>
+                        {recentSearch.map((k, i) => {
+                            return (
+                                <span
+                                    className="s-key"
+                                    key={i}
+                                    onClick={() => {
+                                        this.setState({
+                                            keyword: k
+                                        })
+                                    }}
+                                >{k}</span>
+                            )
+                        })}
+                    </div>
+
                     <br />
                     {/*  */}
                     <div className="button"
-                        style={{pointerEvents:submitDisable?'none':'auto'}}
-                        ref = {(input)=>{ this.submit = input }}
-                        onClick={()=>{
+                        style={{ pointerEvents: submitDisable ? 'none' : 'auto' }}
+                        ref={(input) => { this.submitBtn = input }}
+                        onClick={() => {
+                            if (recentSearch.indexOf(keyword) === -1) {
+                                recentSearch.pop()
+                                recentSearch.unshift(keyword)
+                            }
                             this.setState({
-                                submitDisable:true
+                                submitDisable: true,
+                                keyword: '',
+                                recentSearch
                             })
-                            setTimeout(()=>{
+                            setTimeout(() => {
                                 this.setState({
-                                    submitDisable:false
+                                    submitDisable: false
                                 })
-                            },3000)
+                            }, 3000)
                         }}
-                        >
+                    >
                         <div className="submit"><span>Submit</span></div>
                         <div className="arrow">
                             <div className="top line"></div>

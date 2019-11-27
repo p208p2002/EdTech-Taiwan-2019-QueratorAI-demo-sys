@@ -9,7 +9,6 @@
 	animation: gradientBG 15s ease infinite;
 }
 
-
 @keyframes gradientBG {
 	0% {
 		background-position: 0% 50%;
@@ -20,6 +19,14 @@
 	100% {
 		background-position: 0% 50%;
 	}
+}
+#InputView .s-first{
+	font-weight: 800;
+}
+
+#InputView .s-key{
+	margin-left: 10px;
+	cursor: pointer;
 }
 
 #InputView .container {
@@ -36,7 +43,8 @@
 
 #InputView h3 {
 	color: #eee;
-	font-weight: 100;
+	font-family: "Vollkorn SC", serif;
+	font-size: 20px;
 }
 
 #InputView h5 {
@@ -186,7 +194,7 @@
 	height: 40px;
 	font-size: 0;
 	/* top: 50%; */
-	margin-top: 35px;
+	margin-top: 25px;
 }
 
 #InputView .search {
