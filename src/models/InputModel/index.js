@@ -4,7 +4,11 @@ var $ = require("jquery");
 class InputView extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            keyword: '',
+            submitDisable:false
+        };
+        this.submit = React.createRef
     }
 
     componentDidMount() {
@@ -32,10 +36,10 @@ class InputView extends Component {
         hover();
         hoverOff();
         active();
-
     }
 
     render() {
+        let { keyword,submitDisable } = this.state
         return (
             <div id="InputView">
                 <div className="container">
@@ -43,12 +47,42 @@ class InputView extends Component {
                     <h3>隨意輸入關鍵字吧!</h3>
                     {/* <input type="text" /> */}
                     <div className="wrapper">
-                        <input className="search" type="text" id="search" />
+                        <input
+                            className="search"
+                            type="text"
+                            id="search"
+                            value={keyword}
+                            onChange={(e) => {
+                                this.setState({
+                                    keyword: e.target.value
+                                })
+                            }}
+                            onKeyDown={(e) => {
+                                if(!submitDisable){
+                                    if (e.key === 'Enter') {
+                                        this.submit.click()
+                                    }
+                                }
+                            }}
+                        />
                     </div>
 
                     <br />
                     {/*  */}
-                    <div className="button">
+                    <div className="button"
+                        style={{pointerEvents:submitDisable?'none':'auto'}}
+                        ref = {(input)=>{ this.submit = input }}
+                        onClick={()=>{
+                            this.setState({
+                                submitDisable:true
+                            })
+                            setTimeout(()=>{
+                                this.setState({
+                                    submitDisable:false
+                                })
+                            },3000)
+                        }}
+                        >
                         <div className="submit"><span>Submit</span></div>
                         <div className="arrow">
                             <div className="top line"></div>
