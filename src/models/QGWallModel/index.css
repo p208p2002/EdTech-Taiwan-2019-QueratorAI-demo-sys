@@ -1,7 +1,8 @@
-body{
+body {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
 #Wall {
     /* display: flex; */
     /* align-items: center; */
@@ -11,9 +12,15 @@ body{
     padding: 0;
     margin: 0;
     font-family: 'Noto Sans TC', sans-serif;
-  }
+}
 
-#Wall .high-light{
+#Wall h3 {
+    text-align: center;
+    margin: 0;
+    font-size: 40px;
+}
+
+#Wall .high-light {
     position: absolute;
     background-color: rgba(100, 100, 100, 0.7);
     width: 100%;
@@ -21,28 +28,27 @@ body{
     z-index: 1;
     font-size: 50px;
     line-height: 50px;
-    top:calc(50% - 80px)
+    top: calc(50% - 80px)
 }
 
-#Wall h3{
-    text-align: center;
-    margin: 0;
-}
-
-
-#Wall .high-light-text{
+#Wall .high-light-text {
     position: absolute;
     background-color: rgba(100, 100, 100, 0);
     width: 100%;
     z-index: 1;
     font-size: 50px;
     line-height: 50px;
-    animation-name:oxxo;
-    animation-duration:3s;
-    animation-timing-function:cubic-bezier(0,1,1,0);
-    top:calc(50% - 25px)
+    animation-name: runnung-text;
+    animation-duration: 3s;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    top: calc(50% - 25px)
 }
-@keyframes oxxo{
-    0%   {left:-50%;}
-    100% {left:calc(100% - 50%)}
+
+@keyframes runnung-text {
+    0% {
+        left: -50%;
+    }
+    100% {
+        left: calc(100% - 50%)
+    }
 }

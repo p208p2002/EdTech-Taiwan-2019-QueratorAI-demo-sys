@@ -6,7 +6,7 @@ import './index.css'
 let boxOffset = 10
 let boxHeight = 45 + boxOffset
 let numberOfBoxs = parseInt((window.innerHeight) / (boxHeight)) - 1
-let marginTop = parseInt((window.innerHeight - numberOfBoxs * boxHeight) / 2)
+let marginTop = parseInt(boxHeight/2)
 
 const randRange = (max, min = 1) => {
 	return parseInt(Math.random() * (max - min) + min);
@@ -68,7 +68,7 @@ class Manager extends Component {
 
 	UNSAFE_componentWillMount() {
 		for (var i = 0; i < numberOfBoxs; i++) {
-			this.boxs.push(<Box ref={(input) => { this.boxRefs.push(input) }} key={i} y={i * boxHeight} />)
+			this.boxs.push(<Box ref={(input) => { this.boxRefs.push(input) }} key={i} y={i * boxHeight+marginTop} />)
 		}
 	}
 
@@ -94,7 +94,9 @@ class Manager extends Component {
 			<div id="Wall">
 				<div className="high-light"></div>
 				<div className="high-light-text"><h3 classNam="text-center">new data</h3></div>
-				{boxs}
+				<div style={{marginTop}}>
+					{boxs}
+				</div>
 			</div>
 		);
 	}
