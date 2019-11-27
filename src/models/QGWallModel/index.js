@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Box from './Box.js';
 import cool_data from '../../asset/cool_data.json'
+import './index.css'
 
 let boxOffset = 10
 let boxHeight = 45 + boxOffset
@@ -62,7 +63,7 @@ class Manager extends Component {
 				dataStack
 			})
 			console.log(dataStack)
-		}, 1000)
+		}, 300)
 	}
 
 	UNSAFE_componentWillMount() {
@@ -90,7 +91,9 @@ class Manager extends Component {
 	render() {
 		let { boxs } = this
 		return (
-			<div style={{ marginTop }}>
+			<div id="Wall">
+				<div className="high-light"></div>
+				<div className="high-light-text"><h3 classNam="text-center">new data</h3></div>
 				{boxs}
 			</div>
 		);

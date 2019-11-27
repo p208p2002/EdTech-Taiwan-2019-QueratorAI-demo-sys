@@ -1,0 +1,48 @@
+body{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+#Wall {
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
+#Wall .high-light{
+    position: absolute;
+    background-color: rgba(100, 100, 100, 0.7);
+    width: 100%;
+    height: 160px;
+    z-index: 1;
+    font-size: 50px;
+    line-height: 50px;
+    top:calc(50% - 80px)
+}
+
+#Wall h3{
+    text-align: center;
+    margin: 0;
+}
+
+
+#Wall .high-light-text{
+    position: absolute;
+    background-color: rgba(100, 100, 100, 0);
+    width: 100%;
+    z-index: 1;
+    font-size: 50px;
+    line-height: 50px;
+    animation-name:oxxo;
+    animation-duration:3s;
+    animation-timing-function:cubic-bezier(0,1,1,0);
+    top:calc(50% - 25px)
+}
+@keyframes oxxo{
+    0%   {left:-50%;}
+    100% {left:calc(100% - 50%)}
+}

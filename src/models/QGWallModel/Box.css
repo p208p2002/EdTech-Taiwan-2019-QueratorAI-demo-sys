@@ -1,16 +1,3 @@
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  font-family: 'Noto Sans TC', sans-serif;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
 .box {
   width: 600px;
   height: 45px;
