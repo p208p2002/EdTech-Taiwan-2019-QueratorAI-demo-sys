@@ -1,0 +1,15 @@
+{
+  "name": "qg_express",
+  "version": "1.0.0",
+  "description": "給QG React用的伺服器\r - 404轉送\r - 靜態資源",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
