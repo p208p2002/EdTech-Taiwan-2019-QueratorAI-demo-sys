@@ -6,7 +6,7 @@ import './index.css'
 let boxOffset = 10
 let boxHeight = 45 + boxOffset
 let numberOfBoxs = parseInt((window.innerHeight) / (boxHeight)) - 1
-let marginTop = parseInt(boxHeight/2)
+let marginTop = parseInt(boxHeight / 2)
 
 const randRange = (max, min = 1) => {
 	return parseInt(Math.random() * (max - min) + min);
@@ -16,7 +16,10 @@ class Manager extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dataStack: []
+			dataStack: [],
+			textRunnerStack: [],
+			textRunnerText:'',
+			showRunner: false
 		};
 		this.boxs = []
 		this.boxRefs = []
@@ -25,6 +28,26 @@ class Manager extends Component {
 		this.setBox = this.setBox.bind(this)
 		this.getRandomCoolData = this.getRandomCoolData.bind(this)
 		this.updateBoxDataFromDataStack = this.updateBoxDataFromDataStack.bind(this)
+		this.execTextRunner = this.execTextRunner.bind(this)
+	}
+
+	execTextRunner() {
+		let { textRunnerStack } = this.state
+		let data = textRunnerStack.pop()
+		if (textRunnerStack.length > 0) {
+			this.setState({
+				showRunner:true,
+				textRunnerText:data
+			})
+			setTimeout(()=>{
+				this.setState({
+					showRunner:false
+				})
+			},6500)
+		}
+		this.setState({
+			textRunnerStack
+		})
 	}
 
 	getRandomCoolData() {
@@ -33,12 +56,12 @@ class Manager extends Component {
 
 	setBox(refId, option = {}) {
 		let { text = '', isShow = true } = option
-		setTimeout(()=>{
+		setTimeout(() => {
 			this.boxRefs[refId].setText(text)
-			.then(() => {
-				this.boxRefs[refId].show(isShow)
-			})
-		},randRange(350,0))
+				.then(() => {
+					this.boxRefs[refId].show(isShow)
+				})
+		}, randRange(350, 0))
 	}
 
 	fiilDataStack() {
@@ -55,33 +78,38 @@ class Manager extends Component {
 
 	connectSocket() {
 		setInterval(() => {
-			var { dataStack } = this.state
+			var { dataStack, textRunnerStack } = this.state
 			var newdata = this.getRandomCoolData()
 			dataStack.pop()
 			dataStack.unshift(newdata)
+			textRunnerStack.unshift(newdata)
 			this.setState({
-				dataStack
+				dataStack,
+				textRunnerStack
 			})
-			console.log(dataStack)
-		}, 300)
+			// console.log(dataStack)
+			console.log(textRunnerStack.length)
+		}, 2000)
 	}
 
 	UNSAFE_componentWillMount() {
 		for (var i = 0; i < numberOfBoxs; i++) {
-			this.boxs.push(<Box ref={(input) => { this.boxRefs.push(input) }} key={i} y={i * boxHeight+marginTop} />)
+			this.boxs.push(<Box ref={(input) => { this.boxRefs.push(input) }} key={i} y={i * boxHeight + marginTop} />)
 		}
 	}
 
 	componentDidMount() {
 		this.fiilDataStack()
 		this.connectSocket()
-		this.updateBoxDataFromDataStack()
-		setInterval(()=>{
+		setInterval(() => {
 			this.updateBoxDataFromDataStack()
-		},7000)
+		}, 7000)
+		setInterval(() => {
+			this.execTextRunner()
+		}, 8000)
 	}
 
-	updateBoxDataFromDataStack(){
+	updateBoxDataFromDataStack() {
 		let { dataStack } = this.state
 		for (var i = 0; i < numberOfBoxs; i++) {
 			this.setBox(i, { text: dataStack[i] })
@@ -90,11 +118,12 @@ class Manager extends Component {
 
 	render() {
 		let { boxs } = this
+		let { showRunner,textRunnerText } = this.state
 		return (
 			<div id="Wall">
-				<div className="high-light"></div>
-				<div className="high-light-text"><h3 classNam="text-center">new data</h3></div>
-				<div style={{marginTop}}>
+				<div className={`high-light ${showRunner ? '' : 'hidden'}`}></div>
+		<div className={`high-light-text ${showRunner ? '' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
+				<div style={{ marginTop }}>
 					{boxs}
 				</div>
 			</div>

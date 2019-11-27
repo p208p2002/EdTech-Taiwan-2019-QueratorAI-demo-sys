@@ -3,6 +3,10 @@ body {
     overflow-y: hidden;
 }
 
+#Wall .hidden {
+    visibility: hidden;
+}
+
 #Wall {
     /* display: flex; */
     /* align-items: center; */
@@ -28,7 +32,29 @@ body {
     z-index: 1;
     font-size: 50px;
     line-height: 50px;
-    top: calc(50% - 80px)
+    top: calc(50% - 80px);
+    animation-name: high-light-block;
+    animation-duration: 6.5s;
+    animation-timing-function: cubic-bezier(0, .79, .37, .26);
+}
+
+@keyframes high-light-block {
+    0% {
+        height: 0px;
+        top: calc(50% - 80px);
+    }
+    40% {
+        height: 160px;
+        top: calc(50% - 80px);
+    }
+    97% {
+        height: 160px;
+        top: calc(50% - 80px);
+    }
+    100% {
+        height: 0px;
+        top: calc(50% + 120px);
+    }
 }
 
 #Wall .high-light-text {
@@ -39,7 +65,7 @@ body {
     font-size: 50px;
     line-height: 50px;
     animation-name: runnung-text;
-    animation-duration: 3s;
+    animation-duration: 6s;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
     top: calc(50% - 25px)
 }
