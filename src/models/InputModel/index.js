@@ -10,6 +10,7 @@ class InputView extends Component {
             submitDisable: false
         };
         this.submitBtn = React.createRef
+        this.submit = this.submit.bind(this)
     }
 
     componentDidMount() {
@@ -37,6 +38,24 @@ class InputView extends Component {
         hover();
         hoverOff();
         active();
+    }
+
+    submit(e) {
+        let { recentSearch,keyword } = this.state
+        if (recentSearch.indexOf(keyword) === -1) {
+            recentSearch.pop()
+            recentSearch.unshift(keyword)
+        }
+        this.setState({
+            submitDisable: true,
+            keyword: '',
+            recentSearch
+        })
+        setTimeout(() => {
+            this.setState({
+                submitDisable: false
+            })
+        }, 3000)
     }
 
     render() {
@@ -89,21 +108,8 @@ class InputView extends Component {
                     <div className="button"
                         style={{ pointerEvents: submitDisable ? 'none' : 'auto' }}
                         ref={(input) => { this.submitBtn = input }}
-                        onClick={() => {
-                            if (recentSearch.indexOf(keyword) === -1) {
-                                recentSearch.pop()
-                                recentSearch.unshift(keyword)
-                            }
-                            this.setState({
-                                submitDisable: true,
-                                keyword: '',
-                                recentSearch
-                            })
-                            setTimeout(() => {
-                                this.setState({
-                                    submitDisable: false
-                                })
-                            }, 3000)
+                        onClick={(e) => {
+                            this.submit(e)
                         }}
                     >
                         <div className="submit"><span>Submit</span></div>
