@@ -22,8 +22,10 @@ class Manager extends Component {
 		this.state = {
 			dataStack: [],
 			textRunnerStack: [],
-			textRunnerText:'',
-			showRunner: false
+			textRunnerText: '',
+			showRunner: false,
+			autoUpdateDataStack: false,
+			lastUpdateBoxId: 0
 		};
 		this.boxs = []
 		this.boxRefs = []
@@ -33,10 +35,30 @@ class Manager extends Component {
 		this.getRandomCoolData = this.getRandomCoolData.bind(this)
 		this.updateBoxDataFromDataStack = this.updateBoxDataFromDataStack.bind(this)
 		this.execTextRunner = this.execTextRunner.bind(this)
+
+		//Interval
+		this.setUpdateBoxDataFromDataStackInterval = this.setUpdateBoxDataFromDataStackInterval.bind(this)
+		this.autouUpdateBoxDataFromDataStack = undefined
+	}
+
+	setUpdateBoxDataFromDataStackInterval(bool) {
+		if (bool) {
+			// setup interval
+			this.autouUpdateBoxDataFromDataStack = setInterval(() => {
+				this.updateBoxDataFromDataStack()
+			}, 7000)
+		}
+		else {
+			// remove interval
+			clearInterval(this.autouUpdateBoxDataFromDataStack)
+		}
+		this.setState({
+			autoUpdateDataStack: bool
+		})
 	}
 
 	execTextRunner() {
-		let { textRunnerStack } = this.state
+		let { textRunnerStack, autoUpdateDataStack, lastUpdateBoxId } = this.state
 		let data = textRunnerStack.pop()
 		this.setState({
 			textRunnerStack
@@ -44,14 +66,40 @@ class Manager extends Component {
 		// console.log('execTextRunner',textRunnerStack,data)
 		if (data) {
 			this.setState({
-				showRunner:true,
-				textRunnerText:data
+				showRunner: true,
+				textRunnerText: data
 			})
-			setTimeout(()=>{
+
+			if(lastUpdateBoxId === 0){
+				for(var i=0;i<numberOfBoxs;i++){
+					this.setBox(i,{isShow:false})
+				}
+			}
+
+			new Promise((reslove,reject)=>{
+				setTimeout(() => {
+					this.setState({
+						showRunner: false
+					})
+					return reslove()
+				}, 4500)
+			})
+			.then(()=>{
+				this.setBox(lastUpdateBoxId, { text: data })
 				this.setState({
-					showRunner:false
+					lastUpdateBoxId: lastUpdateBoxId < numberOfBoxs - 1 ? lastUpdateBoxId + 1 : 0
 				})
-			},4500)
+			})
+			
+		}
+		else {
+			// 重新啟動資料柱列更新
+			if (autoUpdateDataStack === false && textRunnerStack.length === 0) {
+				this.setState({
+					lastUpdateBoxId: 0
+				})
+				this.setUpdateBoxDataFromDataStackInterval(true)
+			}
 		}
 	}
 
@@ -84,21 +132,23 @@ class Manager extends Component {
 	connectSocket() {
 		let socket = openSocket.connect('http://140.120.13.250:5002')
 		let self = this
-        socket.on('server_response', function(msg) {
+		socket.on('server_response', function (msg) {
 			console.log(msg.data)
 			var { dataStack, textRunnerStack } = self.state
 			let newdata = msg.data
 			dataStack.pop()
 			dataStack.unshift(newdata)
-			if(textRunnerStack.length <= textRunnerStackLimit){
+			if (textRunnerStack.length <= textRunnerStackLimit) {
 				textRunnerStack.unshift(newdata)
 			}
 			self.setState({
 				dataStack,
 				textRunnerStack
 			})
+			self.setUpdateBoxDataFromDataStackInterval(false) // 關閉刷新
+			// console.log(lastUpdateBoxId)
 		});
-	
+
 	}
 
 	UNSAFE_componentWillMount() {
@@ -110,12 +160,10 @@ class Manager extends Component {
 	componentDidMount() {
 		this.fiilDataStack()
 		this.connectSocket()
-		setInterval(() => {
-			this.updateBoxDataFromDataStack()
-		}, 7000)
+		this.setUpdateBoxDataFromDataStackInterval(true)
 		setInterval(() => {
 			let { showRunner } = this.state
-			if(!showRunner){
+			if (!showRunner) {
 				this.execTextRunner()
 			}
 		}, 1000)
@@ -124,17 +172,17 @@ class Manager extends Component {
 	updateBoxDataFromDataStack() {
 		let { dataStack } = this.state
 		for (var i = 0; i < numberOfBoxs; i++) {
-			this.setBox(i, { text: dataStack[parseInt(randRange(dataStack.length-1,0))] })
+			this.setBox(i, { text: dataStack[parseInt(randRange(dataStack.length - 1, 0))] })
 		}
 	}
 
 	render() {
 		let { boxs } = this
-		let { showRunner,textRunnerText } = this.state
+		let { showRunner, textRunnerText } = this.state
 		return (
 			<div id="Wall">
 				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>
-		<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
+				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
 				<div>
 					{boxs}
 				</div>
