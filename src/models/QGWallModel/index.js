@@ -9,6 +9,8 @@ let boxOffset = 10
 let boxHeight = 45 + boxOffset
 let numberOfBoxs = parseInt((window.innerHeight) / (boxHeight)) - 1
 let marginTop = parseInt(boxHeight / 2)
+let dataStackLimit = 70
+let textRunnerStackLimit = 50
 
 const randRange = (max, min = 1) => {
 	return parseInt(Math.random() * (max - min) + min);
@@ -49,7 +51,7 @@ class Manager extends Component {
 				this.setState({
 					showRunner:false
 				})
-			},6500)
+			},4500)
 		}
 	}
 
@@ -70,7 +72,7 @@ class Manager extends Component {
 	fiilDataStack() {
 		// 使用靜態資源填充
 		let { dataStack } = this.state
-		for (var i = 0; i < numberOfBoxs; i++) {
+		for (var i = 0; i < dataStackLimit; i++) {
 			dataStack.unshift(this.getRandomCoolData())
 		}
 		// console.log(dataStack)
@@ -80,27 +82,7 @@ class Manager extends Component {
 	}
 
 	connectSocket() {
-		// setInterval(() => {
-		// 	var { dataStack, textRunnerStack } = this.state
-		// 	var newdata = this.getRandomCoolData()
-		// 	dataStack.pop()
-		// 	dataStack.unshift(newdata)
-		// 	if(textRunnerStack.length <= 100){
-		// 		textRunnerStack.unshift(newdata)
-		// 	}
-		// 	this.setState({
-		// 		dataStack,
-		// 		textRunnerStack
-		// 	})
-		// 	// console.log(dataStack)
-		// 	console.log('textRunnerStack length',textRunnerStack.length)
-		// }, 2000)
-	
 		let socket = openSocket.connect('http://140.120.13.250:5002')
-		// socket.on('connect', function() {
-        //     socket.emit('connect_event', {data: 'connected!'});
-        // })
-
 		let self = this
         socket.on('server_response', function(msg) {
 			console.log(msg.data)
@@ -108,7 +90,7 @@ class Manager extends Component {
 			let newdata = msg.data
 			dataStack.pop()
 			dataStack.unshift(newdata)
-			if(textRunnerStack.length <= 100){
+			if(textRunnerStack.length <= textRunnerStackLimit){
 				textRunnerStack.unshift(newdata)
 			}
 			self.setState({
@@ -132,14 +114,17 @@ class Manager extends Component {
 			this.updateBoxDataFromDataStack()
 		}, 7000)
 		setInterval(() => {
-			this.execTextRunner()
-		}, 7000)
+			let { showRunner } = this.state
+			if(!showRunner){
+				this.execTextRunner()
+			}
+		}, 1000)
 	}
 
 	updateBoxDataFromDataStack() {
 		let { dataStack } = this.state
 		for (var i = 0; i < numberOfBoxs; i++) {
-			this.setBox(i, { text: dataStack[i] })
+			this.setBox(i, { text: dataStack[parseInt(randRange(dataStack.length-1,0))] })
 		}
 	}
 
