@@ -16,6 +16,18 @@ const randRange = (max, min = 1) => {
 	return parseInt(Math.random() * (max - min) + min);
 }
 
+function shuffle(array) {
+	let counter = array.length;
+	while (counter > 0) {
+		let index = Math.floor(Math.random() * counter);
+		counter--;
+		let temp = array[counter];
+		array[counter] = array[index];
+		array[index] = temp;
+	}
+	return array;
+}
+
 class Manager extends Component {
 	constructor(props) {
 		super(props);
@@ -25,7 +37,7 @@ class Manager extends Component {
 			textRunnerText: '',
 			showRunner: false,
 			autoUpdateDataStack: false,
-			lastUpdateBoxId: 0
+			availableBoxs: []
 		};
 		this.boxs = []
 		this.boxRefs = []
@@ -40,6 +52,25 @@ class Manager extends Component {
 		this.setUpdateBoxDataFromDataStackInterval = this.setUpdateBoxDataFromDataStackInterval.bind(this)
 		this.autouUpdateBoxDataFromDataStack = undefined
 	}
+
+	UNSAFE_componentWillMount() {
+		for (var i = 0; i < numberOfBoxs; i++) {
+			this.boxs.push(<Box ref={(input) => { this.boxRefs.push(input) }} key={i} y={i * boxHeight + marginTop} />)
+		}
+	}
+
+	componentDidMount() {
+		this.fiilDataStack()
+		this.connectSocket()
+		this.setUpdateBoxDataFromDataStackInterval(true)
+		setInterval(() => {
+			let { showRunner } = this.state
+			if (!showRunner) {
+				this.execTextRunner()
+			}
+		}, 1000)
+	}
+
 
 	setUpdateBoxDataFromDataStackInterval(bool) {
 		if (bool) {
@@ -58,26 +89,33 @@ class Manager extends Component {
 	}
 
 	execTextRunner() {
-		let { textRunnerStack, autoUpdateDataStack, lastUpdateBoxId } = this.state
+		let { textRunnerStack, autoUpdateDataStack, availableBoxs } = this.state
 		let data = textRunnerStack.pop()
 		this.setState({
 			textRunnerStack
 		})
-		// console.log('execTextRunner',textRunnerStack,data)
+
 		if (data) {
 			this.setState({
 				showRunner: true,
 				textRunnerText: data
 			})
-			
+
 			//第一次進來，先關閉全部
-			if(lastUpdateBoxId === 0){
-				for(var i=0;i<numberOfBoxs;i++){
-					this.setBox(i,{isShow:false})
+			if (availableBoxs.length === 0) {
+				this.setUpdateBoxDataFromDataStackInterval(false) // 關閉自動刷新
+				let availableBoxs = []
+				for (var i = 0; i < numberOfBoxs; i++) {
+					this.setBox(i, { isShow: false })
+					availableBoxs.push(i)
 				}
+				availableBoxs = shuffle(availableBoxs)
+				this.setState({
+					availableBoxs
+				})
 			}
 
-			new Promise((reslove,reject)=>{
+			new Promise((reslove, reject) => {
 				setTimeout(() => {
 					this.setState({
 						showRunner: false
@@ -85,19 +123,28 @@ class Manager extends Component {
 					return reslove()
 				}, 4500)
 			})
-			.then(()=>{
-				this.setBox(lastUpdateBoxId, { text: data })
-				this.setState({
-					lastUpdateBoxId: lastUpdateBoxId < numberOfBoxs - 1 ? lastUpdateBoxId + 1 : 0
+				.then(() => {
+					var { availableBoxs } = this.state
+					var boxId = availableBoxs.pop()
+					if(!boxId){
+						for (var i = 0; i < numberOfBoxs; i++) {							
+							availableBoxs.push(i)
+						}
+						availableBoxs = shuffle(availableBoxs)
+						boxId = availableBoxs.pop()
+					}
+					this.setBox(boxId, { text: data })
+					this.setState({
+						availableBoxs
+					})
 				})
-			})
-			
+
 		}
 		else {
-			// 重新啟動資料柱列更新
+			// 重新啟動自動刷新
 			if (autoUpdateDataStack === false && textRunnerStack.length === 0) {
 				this.setState({
-					lastUpdateBoxId: 0
+					availableBoxs: []
 				})
 				this.setUpdateBoxDataFromDataStackInterval(true)
 			}
@@ -146,28 +193,8 @@ class Manager extends Component {
 				dataStack,
 				textRunnerStack
 			})
-			self.setUpdateBoxDataFromDataStackInterval(false) // 關閉刷新
-			// console.log(lastUpdateBoxId)
 		});
 
-	}
-
-	UNSAFE_componentWillMount() {
-		for (var i = 0; i < numberOfBoxs; i++) {
-			this.boxs.push(<Box ref={(input) => { this.boxRefs.push(input) }} key={i} y={i * boxHeight + marginTop} />)
-		}
-	}
-
-	componentDidMount() {
-		this.fiilDataStack()
-		this.connectSocket()
-		this.setUpdateBoxDataFromDataStackInterval(true)
-		setInterval(() => {
-			let { showRunner } = this.state
-			if (!showRunner) {
-				this.execTextRunner()
-			}
-		}, 1000)
 	}
 
 	updateBoxDataFromDataStack() {
