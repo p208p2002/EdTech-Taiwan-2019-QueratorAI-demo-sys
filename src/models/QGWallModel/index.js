@@ -52,6 +52,8 @@ class Manager extends Component {
 		//Interval
 		this.setUpdateBoxDataFromDataStackInterval = this.setUpdateBoxDataFromDataStackInterval.bind(this)
 		this.autouUpdateBoxDataFromDataStack = undefined
+		this.setTextRunnerInterval = this.setTextRunnerInterval.bind(this)
+		this.textRunnerInterval = undefined
 	}
 
 	UNSAFE_componentWillMount() {
@@ -64,12 +66,7 @@ class Manager extends Component {
 		this.fiilDataStack()
 		this.connectSocket()
 		this.setUpdateBoxDataFromDataStackInterval(true)
-		setInterval(() => {
-			let { showRunner } = this.state
-			if (!showRunner) {
-				this.execTextRunner()
-			}
-		}, 1000)
+		this.setTextRunnerInterval(false)
 
 		window.addEventListener('resize', function (event) {
 			console.warn('detect window resize, app will restart in 3s')
@@ -85,10 +82,25 @@ class Manager extends Component {
 		}, 7000)
 	}
 
+	setTextRunnerInterval(bool){
+		if(bool){
+			clearInterval(this.textRunnerInterval)
+			this.textRunnerInterval = setInterval(() => {
+				let { showRunner } = this.state
+				if (!showRunner) {
+					this.execTextRunner()
+				}
+			}, 1000)
+		}
+		else{
+			clearInterval(this.textRunnerInterval)
+		}
+	}
 
 	setUpdateBoxDataFromDataStackInterval(bool) {
 		if (bool) {
 			// setup interval
+			clearInterval(this.autouUpdateBoxDataFromDataStack)
 			this.autouUpdateBoxDataFromDataStack = setInterval(() => {
 				this.updateBoxDataFromDataStack()
 			}, 7000)
@@ -103,7 +115,7 @@ class Manager extends Component {
 	}
 
 	execTextRunner() {
-		let { textRunnerStack, autoUpdateDataStack, availableBoxs } = this.state
+		let { textRunnerStack } = this.state
 		// console.log(availableBoxs)
 		let data = textRunnerStack.pop()
 		this.setState({
@@ -118,24 +130,25 @@ class Manager extends Component {
 
 			//第一次進來，先關閉全部
 			new Promise((reslove,reject) => {
-				if (availableBoxs.length === 0) {
-					this.setUpdateBoxDataFromDataStackInterval(false) // 關閉自動刷新
-					let availableBoxs = []
-					for (var i = 0; i < numberOfBoxs; i++) {
-						this.setBox(i, { isShow: false })
-						availableBoxs.push(i)
-					}
-					availableBoxs = shuffle(availableBoxs)
-					this.setState({
-						availableBoxs
-					})
-					setTimeout(() => {
-						reslove()
-					}, 200)
-				}
-				else {
-					reslove()
-				}
+				// if (availableBoxs.length === 0) {
+				// 	this.setUpdateBoxDataFromDataStackInterval(false) // 關閉自動刷新
+				// 	let availableBoxs = []
+				// 	for (var i = 0; i < numberOfBoxs; i++) {
+				// 		this.setBox(i, { isShow: false })
+				// 		availableBoxs.push(i)
+				// 	}
+				// 	availableBoxs = shuffle(availableBoxs)
+				// 	this.setState({
+				// 		availableBoxs
+				// 	})
+				// 	setTimeout(() => {
+				// 		reslove()
+				// 	}, 200)
+				// }
+				// else {
+				// 	reslove()
+				// }
+				reslove()
 			})
 				.then(() => {
 					return new Promise((reslove, reject) => {
@@ -149,6 +162,7 @@ class Manager extends Component {
 				})
 				.then(() => {
 					var { availableBoxs } = this.state
+					// console.log(availableBoxs)
 					var boxId = availableBoxs.pop()
 					if (availableBoxs.length === 0) {
 						for (var i = 0; i < numberOfBoxs; i++) {
@@ -165,10 +179,8 @@ class Manager extends Component {
 		}
 		else {
 			// 重新啟動自動刷新
-			if (autoUpdateDataStack === false && textRunnerStack.length === 0) {
-				this.setState({
-					availableBoxs: []
-				})
+			if (textRunnerStack.length === 0) {
+				this.setTextRunnerInterval(false)
 				this.setUpdateBoxDataFromDataStackInterval(true)
 			}
 		}
@@ -206,6 +218,19 @@ class Manager extends Component {
 		socket.on('server_response', function (msg) {
 			console.log(msg.data)
 			var { dataStack, textRunnerStack } = self.state
+			var availableBoxs = []
+			if(textRunnerStack.length === 0){
+				self.setUpdateBoxDataFromDataStackInterval(false)
+				for (var i = 0; i < numberOfBoxs; i++) {
+					self.setBox(i, { isShow: false })
+					availableBoxs.push(i)
+				}
+				availableBoxs = shuffle(availableBoxs)
+				self.setState({
+					availableBoxs
+				})
+				self.setTextRunnerInterval(true)
+			}
 			let newdata = msg.data
 			dataStack.pop()
 			dataStack.unshift(newdata)
