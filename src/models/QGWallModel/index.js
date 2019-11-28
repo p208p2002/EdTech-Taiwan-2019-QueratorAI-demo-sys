@@ -69,7 +69,8 @@ class Manager extends Component {
 				showRunner: true,
 				textRunnerText: data
 			})
-
+			
+			//第一次進來，先關閉全部
 			if(lastUpdateBoxId === 0){
 				for(var i=0;i<numberOfBoxs;i++){
 					this.setBox(i,{isShow:false})
