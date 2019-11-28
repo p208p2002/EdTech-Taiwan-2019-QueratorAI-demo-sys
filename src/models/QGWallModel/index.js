@@ -38,7 +38,7 @@ class Manager extends Component {
 			showRunner: false,
 			autoUpdateDataStack: false,
 			availableBoxs: [],
-			isInit:true
+			isInit: true
 		};
 		this.boxs = []
 		this.boxRefs = []
@@ -71,18 +71,18 @@ class Manager extends Component {
 			}
 		}, 1000)
 
-		window.addEventListener('resize', function(event){
+		window.addEventListener('resize', function (event) {
 			console.warn('detect window resize, app will restart in 3s')
-			setTimeout(()=>{
+			setTimeout(() => {
 				window.location.reload()
-			},3000)
+			}, 3000)
 		});
 
-		setTimeout(()=>{
+		setTimeout(() => {
 			this.setState({
-				isInit:false
+				isInit: false
 			})
-		},7000)
+		}, 7000)
 	}
 
 
@@ -104,6 +104,7 @@ class Manager extends Component {
 
 	execTextRunner() {
 		let { textRunnerStack, autoUpdateDataStack, availableBoxs } = this.state
+		// console.log(availableBoxs)
 		let data = textRunnerStack.pop()
 		this.setState({
 			textRunnerStack
@@ -116,36 +117,44 @@ class Manager extends Component {
 			})
 
 			//第一次進來，先關閉全部
-			if (availableBoxs.length === 0) {
-				this.setUpdateBoxDataFromDataStackInterval(false) // 關閉自動刷新
-				let availableBoxs = []
-				for (var i = 0; i < numberOfBoxs; i++) {
-					this.setBox(i, { isShow: false })
-					availableBoxs.push(i)
-				}
-				availableBoxs = shuffle(availableBoxs)
-				this.setState({
-					availableBoxs
-				})
-			}
-
-			new Promise((reslove, reject) => {
-				setTimeout(() => {
+			new Promise((reslove,reject) => {
+				if (availableBoxs.length === 0) {
+					this.setUpdateBoxDataFromDataStackInterval(false) // 關閉自動刷新
+					let availableBoxs = []
+					for (var i = 0; i < numberOfBoxs; i++) {
+						this.setBox(i, { isShow: false })
+						availableBoxs.push(i)
+					}
+					availableBoxs = shuffle(availableBoxs)
 					this.setState({
-						showRunner: false
+						availableBoxs
 					})
-					return reslove()
-				}, 4500)
+					setTimeout(() => {
+						reslove()
+					}, 200)
+				}
+				else {
+					reslove()
+				}
 			})
+				.then(() => {
+					return new Promise((reslove, reject) => {
+						setTimeout(() => {
+							this.setState({
+								showRunner: false
+							})
+							return reslove()
+						}, 4500)
+					})
+				})
 				.then(() => {
 					var { availableBoxs } = this.state
 					var boxId = availableBoxs.pop()
-					if(!boxId){
-						for (var i = 0; i < numberOfBoxs; i++) {							
+					if (availableBoxs.length === 0) {
+						for (var i = 0; i < numberOfBoxs; i++) {
 							availableBoxs.push(i)
 						}
 						availableBoxs = shuffle(availableBoxs)
-						boxId = availableBoxs.pop()
 					}
 					this.setBox(boxId, { text: data })
 					this.setState({
@@ -223,7 +232,7 @@ class Manager extends Component {
 		let { showRunner, textRunnerText, isInit } = this.state
 		return (
 			<div id="Wall">
-				{isInit?<h5 style={{position:'absolute',marginLeft:15}}>初始化...</h5>:''}
+				{isInit ? <h5 style={{ position: 'absolute', marginLeft: 15 }}>初始化...</h5> : ''}
 				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>
 				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
 				<div>
