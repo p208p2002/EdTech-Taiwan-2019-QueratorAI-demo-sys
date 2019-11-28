@@ -31,20 +31,21 @@
 
 #InputView .container {
 	width: 100%;
+	height: 400px;
 	position: absolute;
-	top: 30%;
+	top: calc(50% - 200px);
 	text-align: center;
 }
 
 #InputView h1 {
 	text-shadow: 2px 2px #434a54;
-    
+    font-size: 40px;
 }
 
 #InputView h3 {
 	color: #eee;
 	font-family: "Vollkorn SC", serif;
-	font-size: 20px;
+	font-size: 25px;
 }
 
 #InputView h5 {
@@ -101,12 +102,12 @@
 }
 
 #InputView .submit span{
-	font-size: 16px;
+	font-size: 18px;
 }
 
 #InputView .arrow {
 	position: relative;
-    top: 3px;
+    top: 2px;
     left: 30px;
     opacity: 0;
     /* margin: 0 auto; */

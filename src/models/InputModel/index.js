@@ -96,7 +96,7 @@ class InputView extends Component {
                         />
                     </div>
 
-                    <div style={{ marginTop: 15 }}>
+                    <div style={{ marginTop: '20px' }}>
                         <span className="s-first">最近搜尋</span>
                         {recentSearch.map((k, i) => {
                             return (
@@ -128,8 +128,8 @@ class InputView extends Component {
                             <div className="bottom line"></div>
                         </div>
                     </div>
-
-                    <h5>present by UDIC</h5>
+                    <br/>
+                    <h5><small>present by</small><br/>中興大學 UDIC LAB</h5>
 
                 </div>
 
