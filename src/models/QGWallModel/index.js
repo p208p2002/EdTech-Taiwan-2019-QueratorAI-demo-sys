@@ -82,8 +82,8 @@ class Manager extends Component {
 		}, 7000)
 	}
 
-	setTextRunnerInterval(bool){
-		if(bool){
+	setTextRunnerInterval(bool) {
+		if (bool) {
 			clearInterval(this.textRunnerInterval)
 			this.textRunnerInterval = setInterval(() => {
 				let { showRunner } = this.state
@@ -92,7 +92,7 @@ class Manager extends Component {
 				}
 			}, 1000)
 		}
-		else{
+		else {
 			clearInterval(this.textRunnerInterval)
 		}
 	}
@@ -128,38 +128,14 @@ class Manager extends Component {
 				textRunnerText: data
 			})
 
-			//第一次進來，先關閉全部
-			new Promise((reslove,reject) => {
-				// if (availableBoxs.length === 0) {
-				// 	this.setUpdateBoxDataFromDataStackInterval(false) // 關閉自動刷新
-				// 	let availableBoxs = []
-				// 	for (var i = 0; i < numberOfBoxs; i++) {
-				// 		this.setBox(i, { isShow: false })
-				// 		availableBoxs.push(i)
-				// 	}
-				// 	availableBoxs = shuffle(availableBoxs)
-				// 	this.setState({
-				// 		availableBoxs
-				// 	})
-				// 	setTimeout(() => {
-				// 		reslove()
-				// 	}, 200)
-				// }
-				// else {
-				// 	reslove()
-				// }
-				reslove()
-			})
-				.then(() => {
-					return new Promise((reslove, reject) => {
-						setTimeout(() => {
-							this.setState({
-								showRunner: false
-							})
-							return reslove()
-						}, 4500)
+			new Promise((reslove, reject) => {
+				setTimeout(() => {
+					this.setState({
+						showRunner: false
 					})
-				})
+					return reslove()
+				}, 4500)
+			})
 				.then(() => {
 					var { availableBoxs } = this.state
 					// console.log(availableBoxs)
@@ -219,7 +195,7 @@ class Manager extends Component {
 			console.log(msg.data)
 			var { dataStack, textRunnerStack } = self.state
 			var availableBoxs = []
-			if(textRunnerStack.length === 0){
+			if (textRunnerStack.length === 0) {
 				self.setUpdateBoxDataFromDataStackInterval(false)
 				for (var i = 0; i < numberOfBoxs; i++) {
 					self.setBox(i, { isShow: false })
