@@ -37,7 +37,8 @@ class Manager extends Component {
 			textRunnerText: '',
 			showRunner: false,
 			autoUpdateDataStack: false,
-			availableBoxs: []
+			availableBoxs: [],
+			isInit:true
 		};
 		this.boxs = []
 		this.boxRefs = []
@@ -69,6 +70,19 @@ class Manager extends Component {
 				this.execTextRunner()
 			}
 		}, 1000)
+
+		window.addEventListener('resize', function(event){
+			console.warn('detect window resize, app will restart in 3s')
+			setTimeout(()=>{
+				window.location.reload()
+			},3000)
+		});
+
+		setTimeout(()=>{
+			this.setState({
+				isInit:false
+			})
+		},7000)
 	}
 
 
@@ -206,9 +220,10 @@ class Manager extends Component {
 
 	render() {
 		let { boxs } = this
-		let { showRunner, textRunnerText } = this.state
+		let { showRunner, textRunnerText, isInit } = this.state
 		return (
 			<div id="Wall">
+				{isInit?<h5 style={{position:'absolute',marginLeft:15}}>初始化...</h5>:''}
 				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>
 				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
 				<div>
