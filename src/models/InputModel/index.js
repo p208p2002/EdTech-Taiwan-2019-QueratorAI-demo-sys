@@ -96,7 +96,7 @@ class InputView extends Component {
                         />
                     </div>
 
-                    <div style={{ marginTop: '20px' }}>
+                    <div style={{ marginTop: '32px' }}>
                         <span className="s-first">最近搜尋</span>
                         {recentSearch.map((k, i) => {
                             return (
@@ -116,7 +116,7 @@ class InputView extends Component {
                     <br />
                     {/*  */}
                     <div className="button"
-                        style={{ pointerEvents: submitDisable ? 'none' : 'auto' }}
+                        style={{ marginTop:12,marginBottom:12,pointerEvents: submitDisable ? 'none' : 'auto' }}
                         ref={(input) => { this.submitBtn = input }}
                         onClick={(e) => {
                             this.submit(e)
@@ -128,12 +128,25 @@ class InputView extends Component {
                             <div className="bottom line"></div>
                         </div>
                     </div>
-                    <br/>
-                    <h5><small>present by</small><br/>中興大學 UDIC LAB</h5>
-
+                    <br />
+                    <div className="developers">
+                        <div className="first">
+                            <span><b>Querator AI</b></span><br />
+                            <span>詹英鴻</span><br />
+                        </div>
+                        <div className="second">
+                            <span><b>web develop</b><br /></span>
+                            <span>詹英鴻、黃柏鈞</span>
+                        </div>
+                    </div>
+                    <div className="developers">
+                        <div className="third">
+                            <span><b>present by</b><br /></span>
+                            <span>中興大學 UDIC LAB</span>
+                        </div>
+                    </div>
+                    {/* <h5><small>present by</small><br />中興大學 UDIC LAB</h5> */}
                 </div>
-
-
 
             </div>
         );

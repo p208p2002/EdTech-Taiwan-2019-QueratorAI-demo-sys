@@ -9,6 +9,48 @@
 	animation: gradientBG 15s ease infinite;
 }
 
+#InputView .developers{
+	/* position: absolute;
+	bottom: 40px;
+	right: 40px; */
+	font-size: 8px;
+	text-align: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 0 auto;
+	width: 220px;
+}
+
+#InputView .developers .first{
+	position: relative;
+	top:0px;
+	flex: 1;
+}
+
+
+#InputView .developers .second{
+	position: relative;
+	top:0px;
+	flex: 1;
+}
+
+
+#InputView .developers .third{
+	position: relative;
+	top:5px;
+	flex: 1;
+}
+
+#InputView .developers span{
+	line-height: 20px;
+}
+
+#InputView .developers b{
+	font-weight: 500;
+}
+
+
 @keyframes gradientBG {
 	0% {
 		background-position: 0% 50%;
@@ -39,13 +81,16 @@
 
 #InputView h1 {
 	text-shadow: 2px 2px #434a54;
-    font-size: 40px;
+	font-size: 50px;
+	margin: 0;
 }
 
 #InputView h3 {
 	color: #eee;
 	font-family: "Vollkorn SC", serif;
-	font-size: 25px;
+	font-size: 28px;
+	margin-bottom: 0;
+	margin-top: 12px;
 }
 
 #InputView h5 {
@@ -75,7 +120,7 @@
     margin:  0 auto;
 	position: relative;
 	height: 40px;
-	width: 220px;
+	width: 280px;
 	background: #00BCD4;
 	border-radius: 8px;
 	text-align: center;
@@ -201,8 +246,7 @@
 #InputView .search {
 	padding: 0 30px;
 	font-size: 18px;
-	width: 300px;
-	max-width: 400px;
+	width: 350px;
 	height: 40px;
 	border: 1px solid darken(white, 30%);
 	border-radius: 20px 20px 20px 20px;
