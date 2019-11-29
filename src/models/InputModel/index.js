@@ -116,7 +116,7 @@ class InputView extends Component {
                     <br />
                     {/*  */}
                     <div className="button"
-                        style={{ marginTop:12,marginBottom:12,pointerEvents: submitDisable ? 'none' : 'auto' }}
+                        style={{ marginTop:12,marginBottom:10,pointerEvents: submitDisable ? 'none' : 'auto' }}
                         ref={(input) => { this.submitBtn = input }}
                         onClick={(e) => {
                             this.submit(e)
