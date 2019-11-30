@@ -128,19 +128,22 @@ class InputView extends Component {
                             <div className="bottom line"></div>
                         </div>
                     </div>
-                    <br />
+                    <span style={{display:'inline-block',height:10}} />
                     <div className="developers">
                         <div className="first">
                             <span><b>Querator AI</b></span><br />
                             <span>詹英鴻</span><br />
                         </div>
-                        <div className="second">
+                        
+                    </div>
+                    <div className="developers">
+                        <div className="first">
                             <span><b>web develop</b><br /></span>
-                            <span>詹英鴻、黃柏鈞</span>
+                            <span>詹英鴻、黃柏鈞、徐偉耀</span>
                         </div>
                     </div>
                     <div className="developers">
-                        <div className="third">
+                        <div className="first">
                             <span><b>present by</b><br /></span>
                             <span>中興大學 UDIC LAB</span>
                         </div>

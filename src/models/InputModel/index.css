@@ -13,12 +13,12 @@
 	/* position: absolute;
 	bottom: 40px;
 	right: 40px; */
-	font-size: 8px;
+	font-size: 10px;
 	text-align: center;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	margin: 0 auto;
+	margin: 0px auto 5px auto;
 	width: 220px;
 }
 
@@ -27,7 +27,7 @@
 	top:0px;
 	flex: 1;
 }
-
+/* 
 
 #InputView .developers .second{
 	position: relative;
@@ -40,7 +40,7 @@
 	position: relative;
 	top:5px;
 	flex: 1;
-}
+} */
 
 #InputView .developers span{
 	line-height: 20px;
