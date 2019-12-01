@@ -72,7 +72,6 @@ class InputView extends Component {
                 if (status === 500) {
                     toast('😱你考倒我啦', {
                         position: "bottom-center",
-                        autoClose: 4000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -88,7 +87,7 @@ class InputView extends Component {
             <div id="InputView">
                 <ToastContainer
                     position="bottom-center"
-                    autoClose={3000}
+                    autoClose={4000}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick
