@@ -9,7 +9,7 @@ let boxOffset = 10
 let boxHeight = 45 + boxOffset
 let numberOfBoxs = parseInt((window.innerHeight) / (boxHeight)) - 1
 let marginTop = parseInt(boxHeight / 2)
-let dataStackLimit = 70
+let dataStackLimit = 80
 let textRunnerStackLimit = 50
 
 const randRange = (max, min = 1) => {
