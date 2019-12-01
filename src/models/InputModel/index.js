@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './index.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 var $ = require("jquery");
 const axios = require('axios');
 class InputView extends Component {
@@ -63,8 +65,20 @@ class InputView extends Component {
             .then((res) => {
                 console.log(res)
             })
-            .catch((res) => {
-                console.log(res)
+            .catch((error) => {
+                let { response={} } = error,
+                { status = 500 } = response
+                // let {status:statusCode = 0} = error.response
+                if (status === 500) {
+                    toast('😱你考倒我啦', {
+                        position: "bottom-center",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true
+                    });
+                }
             })
     }
 
@@ -72,6 +86,17 @@ class InputView extends Component {
         let { keyword, submitDisable, recentSearch } = this.state
         return (
             <div id="InputView">
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable
+                    pauseOnHover
+                />
                 <div className="container">
                     <h1>Querator AI</h1>
                     <h3>隨意輸入關鍵字吧!</h3>
@@ -116,7 +141,7 @@ class InputView extends Component {
                     <br />
                     {/*  */}
                     <div className="button"
-                        style={{ marginTop:12,marginBottom:10,pointerEvents: submitDisable ? 'none' : 'auto' }}
+                        style={{ marginTop: 12, marginBottom: 10, pointerEvents: submitDisable ? 'none' : 'auto' }}
                         ref={(input) => { this.submitBtn = input }}
                         onClick={(e) => {
                             this.submit(e)
@@ -128,13 +153,13 @@ class InputView extends Component {
                             <div className="bottom line"></div>
                         </div>
                     </div>
-                    <span style={{display:'inline-block',height:10}} />
+                    <span style={{ display: 'inline-block', height: 10 }} />
                     <div className="developers">
                         <div className="first">
                             <span><b>Querator AI</b></span><br />
                             <span>詹英鴻</span><br />
                         </div>
-                        
+
                     </div>
                     <div className="developers">
                         <div className="first">
