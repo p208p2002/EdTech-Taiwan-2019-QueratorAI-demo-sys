@@ -209,7 +209,7 @@ class Manager extends Component {
 					})
 					self.setTextRunnerInterval(true)
 				}
-				let newdata = msg.data
+				let {data:newdata="NO_DATA"} = msg.data
 				dataStack.pop()
 				dataStack.unshift(newdata)
 				if (textRunnerStack.length <= textRunnerStackLimit) {
