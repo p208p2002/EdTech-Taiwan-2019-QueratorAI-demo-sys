@@ -193,7 +193,7 @@ class Manager extends Component {
 		let self = this
 		socket.on('server_response', function (msg) {
 			console.log(msg.data)
-			let { event } = msg.data
+			let { event='QUESTION' } = msg.data
 			if (event === 'QUESTION') {
 				var { dataStack, textRunnerStack } = self.state
 				var availableBoxs = []
