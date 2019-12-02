@@ -193,30 +193,33 @@ class Manager extends Component {
 		let self = this
 		socket.on('server_response', function (msg) {
 			console.log(msg.data)
-			var { dataStack, textRunnerStack } = self.state
-			var availableBoxs = []
-			if (textRunnerStack.length === 0) {
-				self.setUpdateBoxDataFromDataStackInterval(false)
-				for (var i = 0; i < numberOfBoxs; i++) {
-					self.setBox(i, { isShow: false })
-					availableBoxs.push(i)
+			let { event } = msg.data
+			if (event === 'QUESTION') {
+				var { dataStack, textRunnerStack } = self.state
+				var availableBoxs = []
+				if (textRunnerStack.length === 0) {
+					self.setUpdateBoxDataFromDataStackInterval(false)
+					for (var i = 0; i < numberOfBoxs; i++) {
+						self.setBox(i, { isShow: false })
+						availableBoxs.push(i)
+					}
+					availableBoxs = shuffle(availableBoxs)
+					self.setState({
+						availableBoxs
+					})
+					self.setTextRunnerInterval(true)
 				}
-				availableBoxs = shuffle(availableBoxs)
+				let newdata = msg.data
+				dataStack.pop()
+				dataStack.unshift(newdata)
+				if (textRunnerStack.length <= textRunnerStackLimit) {
+					textRunnerStack.unshift(newdata)
+				}
 				self.setState({
-					availableBoxs
+					dataStack,
+					textRunnerStack
 				})
-				self.setTextRunnerInterval(true)
 			}
-			let newdata = msg.data
-			dataStack.pop()
-			dataStack.unshift(newdata)
-			if (textRunnerStack.length <= textRunnerStackLimit) {
-				textRunnerStack.unshift(newdata)
-			}
-			self.setState({
-				dataStack,
-				textRunnerStack
-			})
 		});
 
 	}
