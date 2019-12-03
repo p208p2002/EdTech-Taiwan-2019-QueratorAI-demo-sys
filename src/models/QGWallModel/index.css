@@ -49,6 +49,7 @@ body {
     animation-duration: 20s;
     animation-timing-function: linear;
     text-align: center;
+    z-index: 2;
 }
 
 #Wall .keyword-runner-bg{
@@ -57,7 +58,8 @@ body {
     display: inline-block;
     width: 100%;
     height: 32px;
-    background-color:rgba(0, 0, 0, 0.2);
+    background-color:rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 

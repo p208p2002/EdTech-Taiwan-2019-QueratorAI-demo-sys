@@ -289,11 +289,11 @@ class Manager extends Component {
 					pauseOnVisibilityChange
 					draggable
 					pauseOnHover
-				/>
-				<span className={`${showKeyWordRunner ? 'keyword-runner' : 'hidden'}`}>{keywordText}</span>
+				/>				
 				<span className={`${showKeyWordRunner ? 'keyword-runner-bg' : 'hidden'}`}></span>
-				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>
-				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
+				<span className={`${showKeyWordRunner ? 'keyword-runner' : 'hidden'}`}>{keywordText}</span>
+				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>				
+				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>				
 				<div>
 					{boxs}
 				</div>
