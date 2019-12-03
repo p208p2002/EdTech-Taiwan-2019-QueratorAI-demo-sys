@@ -203,7 +203,7 @@ class Manager extends Component {
 	}
 
 	connectSocket() {
-		let socket = openSocket.connect('http://140.120.13.250:5002')
+		let socket = openSocket.connect('http://140.120.13.250:6002')
 		let self = this
 		socket.on('server_response', function (msg) {
 			console.log(msg)

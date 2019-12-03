@@ -59,7 +59,7 @@ class InputView extends Component {
                 submitDisable: false
             })
         }, 3000)
-        axios.post('http://140.120.13.250:5002/generate-question', {
+        axios.post('http://140.120.13.250:6002/generate-question', {
             key: keyword
         }, { headers: { 'Content-Type': 'application/json; charset=utf-8' } })
             .then((res) => {
