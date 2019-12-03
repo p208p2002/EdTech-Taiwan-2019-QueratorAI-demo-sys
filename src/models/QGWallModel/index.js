@@ -194,12 +194,12 @@ class Manager extends Component {
 		socket.on('server_response', function (msg) {
 			console.log(msg)
 			let { event = 'QUESTION', data = "NO_DATA" } = msg
-			if (event === 'QUESTION') {
-				var { dataStack, textRunnerStack } = self.state
-				var availableBoxs = []
+			var { dataStack, textRunnerStack } = self.state
+			var availableBoxs = [],i
+			if (event === 'QUESTION') {				
 				if (textRunnerStack.length === 0) {
 					self.setUpdateBoxDataFromDataStackInterval(false)
-					for (var i = 0; i < numberOfBoxs; i++) {
+					for (i = 0; i < numberOfBoxs; i++) {
 						self.setBox(i, { isShow: false })
 						availableBoxs.push(i)
 					}
@@ -212,6 +212,7 @@ class Manager extends Component {
 
 				dataStack.pop()
 				dataStack.unshift(data)
+
 				if (textRunnerStack.length <= textRunnerStackLimit) {
 					textRunnerStack.unshift(data)
 				}
@@ -219,6 +220,9 @@ class Manager extends Component {
 					dataStack,
 					textRunnerStack
 				})
+			}
+			else if (event === 'KEYWORD') {
+				console.log('event:KEYWORD')
 			}
 		});
 
