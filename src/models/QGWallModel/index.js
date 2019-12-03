@@ -192,8 +192,8 @@ class Manager extends Component {
 		let socket = openSocket.connect('http://140.120.13.250:5002')
 		let self = this
 		socket.on('server_response', function (msg) {
-			console.log(msg.data)
-			let { event='QUESTION' } = msg.data
+			console.log(msg)
+			let { event='QUESTION' } = msg
 			if (event === 'QUESTION') {
 				var { dataStack, textRunnerStack } = self.state
 				var availableBoxs = []
@@ -209,7 +209,7 @@ class Manager extends Component {
 					})
 					self.setTextRunnerInterval(true)
 				}
-				let {data:newdata="NO_DATA"} = msg.data
+				let {data:newdata="NO_DATA"} = msg
 				dataStack.pop()
 				dataStack.unshift(newdata)
 				if (textRunnerStack.length <= textRunnerStackLimit) {
