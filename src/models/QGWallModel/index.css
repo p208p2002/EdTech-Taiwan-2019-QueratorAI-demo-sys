@@ -3,6 +3,20 @@ body {
     overflow-y: hidden;
 }
 
+#Wall .Toastify__toast-container{
+    text-align: center;
+    font-size: 18px;
+    width: 380px;
+}
+
+#Wall .Toastify__toast--default{
+    color: rgb(65, 65, 65);
+}
+
+#Wall .Toastify__toast-container--bottom-center{
+    margin-left: -190px;
+}
+
 #Wall .hidden {
     visibility: hidden;
 }
@@ -27,10 +41,10 @@ body {
 #Wall .keyword-runner{
     position: absolute;
     top: 0;
-    right: -400px;
+    right: -600px;
     font-size: 20px;
     display: inline-block;
-    width: 400px;
+    width: 600px;
     animation-name: keyword-runner-ani;
     animation-duration: 20s;
     animation-timing-function: linear;
@@ -49,7 +63,7 @@ body {
 
 @keyframes keyword-runner-ani {
     0% {
-       right: -400px;
+       right: -600px;
     }
     100% {
         right: 100%;        

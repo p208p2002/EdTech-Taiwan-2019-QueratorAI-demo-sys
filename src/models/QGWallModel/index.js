@@ -85,6 +85,15 @@ class Manager extends Component {
 				isInit: false
 			})
 		}, 7000)
+
+		// toast(<span>😱你考倒我啦<br/>您給的關鍵字我不太清楚<br/>請再輸入更完整一點的訊息～</span>, {
+		// 	position: "bottom-center",
+		// 	hideProgressBar: false,
+		// 	closeOnClick: true,
+		// 	pauseOnHover: true,
+		// 	draggable: true,
+		// 	autoClose:50000
+		// });
 	}
 
 	setTextRunnerInterval(bool) {
@@ -227,32 +236,25 @@ class Manager extends Component {
 				})
 			}
 			else if (event === 'KEYWORD') {
-				console.log('event:KEYWORD')
-				//
-				// self.setUpdateBoxDataFromDataStackInterval(false)
-				// for (i = 0; i < numberOfBoxs; i++) {
-				// 	self.setBox(i, { isShow: false })
-				// 	availableBoxs.push(i)
-				// }
-				//
+				console.log('event:KEYWORD')			
 				clearTimeout(self.keywordTextTimeout)
 				self.setState({
-					showKeyWordRunner: false,
-					keywordText: ''
+					showKeyWordRunner:false,
+					keywordText:''
 				})
 				self.setState({
-					showKeyWordRunner: true,
-					keywordText: data
+					showKeyWordRunner:true,
+					keywordText:data+'請稍後，Querator正在生成問句🤨'
 				})
-				self.keywordTextTimeout = setTimeout(() => {
+				self.keywordTextTimeout = setTimeout(()=>{
 					self.setState({
-						showKeyWordRunner: false,
-						keywordText: ''
+						showKeyWordRunner:false,
+						keywordText:''
 					})
-				}, 20000)
+				},20000)
 			}
 			else if (event === 'NO_RESULT') {
-				toast('😱你考倒我啦', {
+				toast(<span>😱你考倒我啦<br/>您給的關鍵字我不太清楚<br/>請再輸入更完整一點的訊息～</span>, {
 					position: "bottom-center",
 					hideProgressBar: false,
 					closeOnClick: true,
