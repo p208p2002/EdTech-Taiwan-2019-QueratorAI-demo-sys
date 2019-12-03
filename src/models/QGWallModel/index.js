@@ -193,7 +193,7 @@ class Manager extends Component {
 		let self = this
 		socket.on('server_response', function (msg) {
 			console.log(msg)
-			let { event='QUESTION' } = msg
+			let { event = 'QUESTION', data = "NO_DATA" } = msg
 			if (event === 'QUESTION') {
 				var { dataStack, textRunnerStack } = self.state
 				var availableBoxs = []
@@ -209,11 +209,11 @@ class Manager extends Component {
 					})
 					self.setTextRunnerInterval(true)
 				}
-				let {data:newdata="NO_DATA"} = msg
+
 				dataStack.pop()
-				dataStack.unshift(newdata)
+				dataStack.unshift(data)
 				if (textRunnerStack.length <= textRunnerStackLimit) {
-					textRunnerStack.unshift(newdata)
+					textRunnerStack.unshift(data)
 				}
 				self.setState({
 					dataStack,
