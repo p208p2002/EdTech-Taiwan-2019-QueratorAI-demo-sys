@@ -3,6 +3,8 @@ import Box from './Box.js';
 import cool_data from '../../asset/cool_data.json'
 import './index.css'
 import openSocket from 'socket.io-client';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // const io = require('socket.io');
 
 let boxOffset = 10
@@ -36,6 +38,9 @@ class Manager extends Component {
 			textRunnerStack: [],
 			textRunnerText: '',
 			showRunner: false,
+			showKeyWordRunner: false,
+			keywordText: '',
+			keywordTextStack: [],
 			autoUpdateDataStack: false,
 			availableBoxs: [],
 			isInit: true
@@ -195,8 +200,8 @@ class Manager extends Component {
 			console.log(msg)
 			let { event = 'QUESTION', data = "NO_DATA" } = msg
 			var { dataStack, textRunnerStack } = self.state
-			var availableBoxs = [],i
-			if (event === 'QUESTION') {				
+			var availableBoxs = [], i
+			if (event === 'QUESTION') {
 				if (textRunnerStack.length === 0) {
 					self.setUpdateBoxDataFromDataStackInterval(false)
 					for (i = 0; i < numberOfBoxs; i++) {
@@ -223,6 +228,16 @@ class Manager extends Component {
 			}
 			else if (event === 'KEYWORD') {
 				console.log('event:KEYWORD')
+				
+			}
+			else if (event === 'NO_RESULT') {
+				toast('😱你考倒我啦', {
+					position: "bottom-center",
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true
+				});
 			}
 		});
 
@@ -237,10 +252,23 @@ class Manager extends Component {
 
 	render() {
 		let { boxs } = this
-		let { showRunner, textRunnerText, isInit } = this.state
+		let { showRunner, textRunnerText, isInit, keywordText, showKeyWordRunner } = this.state
 		return (
 			<div id="Wall">
 				{isInit ? <h5 style={{ position: 'absolute', marginLeft: 15 }}>初始化...</h5> : ''}
+				<ToastContainer
+					position="bottom-center"
+					autoClose={4000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnVisibilityChange
+					draggable
+					pauseOnHover
+				/>
+				<span className={`${showKeyWordRunner ? 'keyword-runner' : 'hidden'}`}>{keywordText}</span>
+				<span className={`${showKeyWordRunner ? 'keyword-runner-bg' : 'hidden'}`}></span>
 				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>
 				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
 				<div>
