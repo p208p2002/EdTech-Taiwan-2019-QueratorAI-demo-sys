@@ -254,7 +254,7 @@ class Manager extends Component {
 				},20000)
 			}
 			else if (event === 'NO_RESULT') {
-				toast(<span>😱你考倒我啦<br/>您給的關鍵字我不太清楚<br/>請再輸入更完整一點的訊息～</span>, {
+				toast(<span><span role="img" aria-label="emoji">😱</span>你考倒我啦<br/>您給的關鍵字我不太清楚<br/>請再輸入更完整一點的訊息～</span>, {
 					position: "bottom-center",
 					hideProgressBar: false,
 					closeOnClick: true,
