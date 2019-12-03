@@ -9,7 +9,7 @@ class InputView extends Component {
         super(props);
         this.state = {
             keyword: '',
-            recentSearch: ['韓國瑜', '蔡英文', '柯文哲', '周杰倫', '蔡英文'],
+            recentSearch: ['韓國瑜', '蔡英文', '柯文哲', '圖靈測試', '摩爾定律'],
             submitDisable: false
         };
         this.submitBtn = React.createRef
