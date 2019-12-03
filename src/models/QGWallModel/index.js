@@ -40,7 +40,6 @@ class Manager extends Component {
 			showRunner: false,
 			showKeyWordRunner: false,
 			keywordText: '',
-			keywordTextStack: [],
 			autoUpdateDataStack: false,
 			availableBoxs: [],
 			isInit: true
@@ -54,11 +53,12 @@ class Manager extends Component {
 		this.updateBoxDataFromDataStack = this.updateBoxDataFromDataStack.bind(this)
 		this.execTextRunner = this.execTextRunner.bind(this)
 
-		//Interval
+		//Interval or timeout
 		this.setUpdateBoxDataFromDataStackInterval = this.setUpdateBoxDataFromDataStackInterval.bind(this)
 		this.autouUpdateBoxDataFromDataStack = undefined
 		this.setTextRunnerInterval = this.setTextRunnerInterval.bind(this)
 		this.textRunnerInterval = undefined
+		this.keywordTextTimeout = undefined
 	}
 
 	UNSAFE_componentWillMount() {
@@ -228,7 +228,21 @@ class Manager extends Component {
 			}
 			else if (event === 'KEYWORD') {
 				console.log('event:KEYWORD')
-				
+				clearTimeout(self.keywordTextTimeout)
+				self.setState({
+					showKeyWordRunner:false,
+					keywordText:''
+				})
+				self.setState({
+					showKeyWordRunner:true,
+					keywordText:data
+				})
+				self.keywordTextTimeout = setTimeout(()=>{
+					self.setState({
+						showKeyWordRunner:false,
+						keywordText:''
+					})
+				},20000)
 			}
 			else if (event === 'NO_RESULT') {
 				toast('😱你考倒我啦', {
