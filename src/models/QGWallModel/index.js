@@ -228,21 +228,28 @@ class Manager extends Component {
 			}
 			else if (event === 'KEYWORD') {
 				console.log('event:KEYWORD')
+				//
+				// self.setUpdateBoxDataFromDataStackInterval(false)
+				// for (i = 0; i < numberOfBoxs; i++) {
+				// 	self.setBox(i, { isShow: false })
+				// 	availableBoxs.push(i)
+				// }
+				//
 				clearTimeout(self.keywordTextTimeout)
 				self.setState({
-					showKeyWordRunner:false,
-					keywordText:''
+					showKeyWordRunner: false,
+					keywordText: ''
 				})
 				self.setState({
-					showKeyWordRunner:true,
-					keywordText:data
+					showKeyWordRunner: true,
+					keywordText: data
 				})
-				self.keywordTextTimeout = setTimeout(()=>{
+				self.keywordTextTimeout = setTimeout(() => {
 					self.setState({
-						showKeyWordRunner:false,
-						keywordText:''
+						showKeyWordRunner: false,
+						keywordText: ''
 					})
-				},20000)
+				}, 20000)
 			}
 			else if (event === 'NO_RESULT') {
 				toast('😱你考倒我啦', {
