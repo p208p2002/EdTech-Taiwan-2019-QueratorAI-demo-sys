@@ -73,12 +73,13 @@ class Manager extends Component {
 		this.setUpdateBoxDataFromDataStackInterval(true)
 		this.setTextRunnerInterval(false)
 
-		window.addEventListener('resize', function (event) {
-			console.warn('detect window resize, app will restart in 3s')
-			setTimeout(() => {
-				window.location.reload()
-			}, 3000)
-		});
+		// let resizeEvent =  function (event) {
+		// 	console.warn('detect window resize, app will restart in 3s')
+		// 	setTimeout(() => {
+		// 		window.location.reload()
+		// 	}, 3000)
+		// }
+		// window.addEventListener('resize',resizeEvent);
 
 		setTimeout(() => {
 			this.setState({
