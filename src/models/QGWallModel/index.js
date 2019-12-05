@@ -56,11 +56,11 @@ class Manager extends Component {
 		let runnerText = [
 			'你知道嗎? ... 現在AI已經能生成非常順暢的文本',
 			'你知道嗎? ... 現在畫面上的這些問句都是由AI生成',
-			'你知道嗎? ... Querator AI 是基於BERT的閱讀理解AI',
+			'你知道嗎? ... Querator AI 是基於 BERT 的閱讀理解 AI',
 			'你知道嗎? ... Querator AI 能生產出通順、高品質的問句',
 			'你知道嗎? ... Querator AI 擁有媲美人類專家的閱讀理解能力',
 			'你知道嗎? ... Querator AI 是來自 UDIC LAB 研發出來的問題產生AI',
-			'你知道嗎? ... BERT是來自GOOGLE團隊的研究成果',
+			'你知道嗎? ... BERT 是來自 GOOGLE 團隊的研究成果',
 			'你知道嗎? ... 掃描畫面下面的 QR CODE 可以獲得更多關於 Querator AI 的資訊',
 			'你知道嗎? ... 我們可以使用將 AI 產生的問句應用在教育產業',
 			'你知道嗎? ... 藉由 AI 的幫忙，我們可以降低教學上出題需要的人力成本',
@@ -312,7 +312,6 @@ class Manager extends Component {
 						zIndex: 1,
 						textShadow: '1px 1px white',
 						backgroundColor: 'rgba(255,255,255,0.8)',
-						padding:'0px 5px 0px 5px',
 						borderRadius:10
 					}}>
 					<img
