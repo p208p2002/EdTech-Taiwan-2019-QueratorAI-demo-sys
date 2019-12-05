@@ -59,7 +59,11 @@ class Manager extends Component {
 			'你知道嗎? ... Querator AI 是基於BERT的閱讀理解AI',
 			'你知道嗎? ... Querator AI 能生產出通順、高品質的問句',
 			'你知道嗎? ... Querator AI 擁有媲美人類專家的閱讀理解能力',
-			'你知道嗎? ... BERT是來自GOOGLE團隊的研究成果'
+			'你知道嗎? ... Querator AI 來自於UDIC LAB研發出來的問題產生模型',
+			'你知道嗎? ... BERT是來自GOOGLE團隊的研究成果',
+			'你知道嗎? ... 掃描畫面下面的 QR CODE 可以獲得更多關於 Querator AI 的資訊',
+			'你知道嗎? ... 我們可以使用將 AI 產生的問句應用在教育產業',
+			'你知道嗎? ... 藉由 AI 的幫忙，我們可以降低教學上出題需要的人力成本',
 		]
 		setTimeout(()=>{
 			this.setState({
