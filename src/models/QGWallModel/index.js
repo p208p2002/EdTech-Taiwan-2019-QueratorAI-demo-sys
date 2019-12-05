@@ -185,7 +185,7 @@ class Manager extends Component {
 				}, 4500)
 			})
 		}
-		else if(data && textRunnerStack.length == 0){
+		else if(data && textRunnerStack.length === 0){
 			return Promise.reject('NULL')
 		}
 		else{
