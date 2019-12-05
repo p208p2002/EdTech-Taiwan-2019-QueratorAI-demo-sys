@@ -64,6 +64,7 @@ class Manager extends Component {
 			'你知道嗎? ... 掃描畫面下面的 QR CODE 可以獲得更多關於 Querator AI 的資訊',
 			'你知道嗎? ... 我們可以使用將 AI 產生的問句應用在教育產業',
 			'你知道嗎? ... 藉由 AI 的幫忙，我們可以降低教學上出題需要的人力成本',
+			'你知道嗎? ... Querator AI Team 是來自中興大學 - 普及資料與智慧運算實驗室',
 		]
 		setTimeout(()=>{
 			this.setState({
