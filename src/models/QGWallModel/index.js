@@ -5,6 +5,8 @@ import './index.css'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Axios from 'axios';
+import qcode from './qcode.png'
+// import { rgba } from 'style-value-types';
 // const io = require('socket.io');
 
 let boxOffset = 10
@@ -46,6 +48,36 @@ class Manager extends Component {
 		this.setTextRunnerInterval = this.setTextRunnerInterval.bind(this)
 		this.textRunnerInterval = undefined
 		this.keywordTextTimeout = undefined
+		this.setKeywordRunner = this.setKeywordRunner.bind(this)
+		this.keywordRunnerEvent = this.keywordRunnerEvent.bind(this)
+	}
+
+	keywordRunnerEvent(){
+		let runnerText = [
+			'你知道嗎? ... 現在AI已經能生成非常順暢的文本',
+			'你知道嗎? ... 現在畫面上的這些問句都是由AI生成',
+			'你知道嗎? ... Querator AI 是基於BERT的閱讀理解AI',
+			'你知道嗎? ... Querator AI 能生產出通順、高品質的問句',
+			'你知道嗎? ... Querator AI 擁有媲美人類專家的閱讀理解能力',
+			'你知道嗎? ... BERT是來自GOOGLE團隊的研究成果'
+		]
+		setTimeout(()=>{
+			this.setState({
+				showKeyWordRunner:true,
+				keywordText:runnerText[randRange(0,runnerText.length)]
+			})
+		},0)
+		setTimeout(()=>{
+			this.setState({
+				showKeyWordRunner:false
+			})
+		},20000)
+	}
+
+	setKeywordRunner(){
+		setInterval(()=>{
+			this.keywordRunnerEvent()
+		},30000)
 	}
 
 	fiilDataStack() {
@@ -75,13 +107,13 @@ class Manager extends Component {
 				})
 				return Promise.resolve(questions)
 			})
-			.then((questions)=>{
-				let { dataStack,textRunnerStack } = this.state
-				questions.forEach((q)=>{
-					if(update){
+			.then((questions) => {
+				let { dataStack, textRunnerStack } = this.state
+				questions.forEach((q) => {
+					if (update) {
 						dataStack.pop()
 					}
-					textRunnerStack.unshift(q)					
+					textRunnerStack.unshift(q)
 					dataStack.unshift(q)
 				})
 				this.setState({
@@ -108,6 +140,9 @@ class Manager extends Component {
 		this.setUpdateBoxDataFromDataStackInterval(true)
 		this.setTextRunnerInterval(false)
 
+		this.setKeywordRunner()
+		this.keywordRunnerEvent()
+
 		window.addEventListener('resize', function (event) {
 			console.warn('detect window resize, app will restart in 3s')
 			setTimeout(() => {
@@ -121,18 +156,18 @@ class Manager extends Component {
 			})
 		}, 7000)
 
-		setInterval(()=>{
+		setInterval(() => {
 			this.execTextRunner()
-			.then(()=>{
-				console.log('then')
-			})
-			.catch((msg)=>{
-				console.log(msg)
-				if(msg === 'NULL'){
-					this.fetchPolling(true)
-				}
-			})
-		},1000)
+				.then(() => {
+					console.log('then')
+				})
+				.catch((msg) => {
+					console.log(msg)
+					if (msg === 'NULL') {
+						this.fetchPolling(true)
+					}
+				})
+		}, 1000)
 	}
 
 	setTextRunnerInterval(bool) {
@@ -168,9 +203,9 @@ class Manager extends Component {
 	}
 
 	execTextRunner() {
-		let { textRunnerStack,showRunner } = this.state
-		let data = textRunnerStack.pop()	
-		if (data && !showRunner && textRunnerStack.length>=1) {
+		let { textRunnerStack, showRunner } = this.state
+		let data = textRunnerStack.pop()
+		if (data && !showRunner && textRunnerStack.length >= 1) {
 			this.setState({
 				showRunner: true,
 				textRunnerText: data,
@@ -185,12 +220,12 @@ class Manager extends Component {
 				}, 4500)
 			})
 		}
-		else if(data && textRunnerStack.length === 0){
+		else if (data && textRunnerStack.length === 0) {
 			return Promise.reject('NULL')
 		}
-		else{
+		else {
 			return Promise.reject('WAIT')
-		}		
+		}
 	}
 
 	getRandomCoolData() {
@@ -238,6 +273,76 @@ class Manager extends Component {
 				<div>
 					{boxs}
 				</div>
+				<div
+					align="center"
+					style={{
+						position: 'absolute',
+						right: '5%',
+						bottom: '5%',
+						zIndex: 1,
+						textShadow: '1px 1px white',
+						backgroundColor: 'rgba(255,255,255,0.8)',
+						padding:'0px 10px 0px 10px',
+						borderRadius:10
+					}}>
+					<br/>
+					{/* <img
+						src={qcode}
+						alt=""
+						srcSet=""
+						style={{
+							width: 185
+						}}
+					/>
+					<br/>
+					<small style={{position:'relative',top:-8,fontSize:10}}>了解更多關於我們的AI技術</small> */}
+					<h1 style={{ margin: 0, fontFamily: 'Vollkorn SC,serif' }}>Querator AI</h1>
+					<span style={{ fontFamily: '微軟正黑體', position: 'relative', top: '-8px' }}>
+						<small style={{ fontFamily: '"Vollkorn SC", serif', fontSize: '12px' }}>present by</small> <br />
+					</span>
+					<span style={{
+						fontFamily: '微軟正黑體',
+						position: 'relative',
+						display: 'inline-block',
+						fontSize: '16px', top: '-10px', fontWeight: 600
+					}}>中興大學 UDIC LAB</span>
+				</div>
+				{/*  */}
+				<div
+					align="center"
+					style={{
+						position: 'absolute',
+						left: '3%',
+						bottom: '3%',
+						zIndex: 1,
+						textShadow: '1px 1px white',
+						backgroundColor: 'rgba(255,255,255,0.8)',
+						padding:'0px 5px 0px 5px',
+						borderRadius:10
+					}}>
+					<br/>
+					<img
+						src={qcode}
+						alt=""
+						srcSet=""
+						style={{
+							width: 185
+						}}
+					/>
+					<br/>
+					<small style={{position:'relative',top:-8,fontSize:10}}>了解更多關於我們的AI技術</small>
+					{/* <h1 style={{ margin: 0, fontFamily: 'Vollkorn SC,serif' }}>Querator AI</h1>
+					<span style={{ fontFamily: '微軟正黑體', position: 'relative', top: '-8px' }}>
+						<small style={{ fontFamily: '"Vollkorn SC", serif', fontSize: '12px' }}>present by</small> <br />
+					</span>
+					<span style={{
+						fontFamily: '微軟正黑體',
+						position: 'relative',
+						display: 'inline-block',
+						fontSize: '16px', top: '-10px', fontWeight: 600
+					}}>中興大學 UDIC LAB</span> */}
+				</div>
+
 			</div>
 		);
 	}

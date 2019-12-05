@@ -28,25 +28,6 @@ ReactDOM.render(
         // padding:500,
         // paddingBottom:100
     }}>
-        {mode === 'out' ? <div
-            align="center"
-            style={{
-                position: 'absolute',
-                right: '5%',
-                bottom: '5%',
-                zIndex: 1,
-                textShadow: '1px 1px white'
-            }}>
-            <h1 style={{ margin: 0, fontFamily: 'Vollkorn SC,serif' }}>Querator AI</h1>
-            <span style={{ fontFamily: '微軟正黑體', position: 'relative', top: '-8px' }}>
-                <small style={{fontFamily: '"Vollkorn SC", serif',fontSize:'12px'}}>present by</small> <br />
-            </span>
-            <span style={{
-                fontFamily: '微軟正黑體',
-                position:'relative',
-                display:'inline-block',
-                fontSize:'12px',top:'-14px',fontWeight:600}}>中興大學 UDIC LAB</span>
-        </div> : <React.Fragment />}
         {mode === 'unset' ?
             <div className="container">
                 <h3>模式設定</h3>
