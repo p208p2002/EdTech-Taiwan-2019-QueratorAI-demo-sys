@@ -17,7 +17,7 @@ function parseQuery(queryString) {
 }
 
 var url = new Url(window.location.href);
-var { mode = 'unset' } = parseQuery(url.query)
+var { mode = 'out' } = parseQuery(url.query)
 // console.log(mode)
 
 ReactDOM.render(

@@ -2,32 +2,19 @@ import React, { Component } from 'react';
 import Box from './Box.js';
 import cool_data from '../../asset/cool_data.json'
 import './index.css'
-import openSocket from 'socket.io-client';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Axios from 'axios';
 // const io = require('socket.io');
 
 let boxOffset = 10
 let boxHeight = 45 + boxOffset
 let numberOfBoxs = parseInt((window.innerHeight) / (boxHeight)) - 1
 let marginTop = parseInt(boxHeight / 2)
-let dataStackLimit = 80
-let textRunnerStackLimit = 50
+let dataStackLimit = 72
 
 const randRange = (max, min = 1) => {
 	return parseInt(Math.random() * (max - min) + min);
-}
-
-function shuffle(array) {
-	let counter = array.length;
-	while (counter > 0) {
-		let index = Math.floor(Math.random() * counter);
-		counter--;
-		let temp = array[counter];
-		array[counter] = array[index];
-		array[index] = temp;
-	}
-	return array;
 }
 
 class Manager extends Component {
@@ -46,12 +33,12 @@ class Manager extends Component {
 		};
 		this.boxs = []
 		this.boxRefs = []
-		this.connectSocket = this.connectSocket.bind(this)
 		this.fiilDataStack = this.fiilDataStack.bind(this)
 		this.setBox = this.setBox.bind(this)
 		this.getRandomCoolData = this.getRandomCoolData.bind(this)
 		this.updateBoxDataFromDataStack = this.updateBoxDataFromDataStack.bind(this)
 		this.execTextRunner = this.execTextRunner.bind(this)
+		this.fetchPolling = this.fetchPolling.bind(this)
 
 		//Interval or timeout
 		this.setUpdateBoxDataFromDataStackInterval = this.setUpdateBoxDataFromDataStackInterval.bind(this)
@@ -61,6 +48,49 @@ class Manager extends Component {
 		this.keywordTextTimeout = undefined
 	}
 
+	fiilDataStack() {
+		// 使用靜態資源填充
+		let { dataStack } = this.state
+		for (var i = 0; i < dataStackLimit; i++) {
+			dataStack.unshift(this.getRandomCoolData())
+		}
+		// console.log(dataStack)
+		this.setState({
+			dataStack
+		})
+	}
+
+	fetchPolling(update = false) {
+		return Axios.get('http://140.120.13.250:5000/getQuestions')
+			.then((res) => {
+				console.log(res.data)
+				let { data = [] } = res
+				let questions = []
+				data.forEach((d) => {
+					let { questions: dQuestions = [] } = d
+					dQuestions.forEach((dq) => {
+						console.log(dq)
+						questions.push(dq)
+					})
+				})
+				return Promise.resolve(questions)
+			})
+			.then((questions)=>{
+				let { dataStack,textRunnerStack } = this.state
+				questions.forEach((q)=>{
+					if(update){
+						dataStack.pop()
+					}
+					textRunnerStack.unshift(q)					
+					dataStack.unshift(q)
+				})
+				this.setState({
+					dataStack,
+					textRunnerStack
+				})
+			})
+	}
+
 	UNSAFE_componentWillMount() {
 		for (var i = 0; i < numberOfBoxs; i++) {
 			this.boxs.push(<Box ref={(input) => { this.boxRefs.push(input) }} key={i} y={i * boxHeight + marginTop} />)
@@ -68,8 +98,13 @@ class Manager extends Component {
 	}
 
 	componentDidMount() {
-		this.fiilDataStack()
-		this.connectSocket()
+		// this.fiilDataStack()
+
+		// 確保用足夠的數量填充		
+		this.fetchPolling()
+		this.fetchPolling()
+
+		// this.connectSocket()
 		this.setUpdateBoxDataFromDataStackInterval(true)
 		this.setTextRunnerInterval(false)
 
@@ -86,14 +121,18 @@ class Manager extends Component {
 			})
 		}, 7000)
 
-		// toast(<span>😱你考倒我啦<br/>您給的關鍵字我不太清楚<br/>請再輸入更完整一點的訊息～</span>, {
-		// 	position: "bottom-center",
-		// 	hideProgressBar: false,
-		// 	closeOnClick: true,
-		// 	pauseOnHover: true,
-		// 	draggable: true,
-		// 	autoClose:50000
-		// });
+		setInterval(()=>{
+			this.execTextRunner()
+			.then(()=>{
+				console.log('then')
+			})
+			.catch((msg)=>{
+				console.log(msg)
+				if(msg === 'NULL'){
+					this.fetchPolling(true)
+				}
+			})
+		},1000)
 	}
 
 	setTextRunnerInterval(bool) {
@@ -129,20 +168,15 @@ class Manager extends Component {
 	}
 
 	execTextRunner() {
-		let { textRunnerStack } = this.state
-		// console.log(availableBoxs)
-		let data = textRunnerStack.pop()
-		this.setState({
-			textRunnerStack
-		})
-
-		if (data) {
+		let { textRunnerStack,showRunner } = this.state
+		let data = textRunnerStack.pop()	
+		if (data && !showRunner && textRunnerStack.length>=1) {
 			this.setState({
 				showRunner: true,
-				textRunnerText: data
+				textRunnerText: data,
+				textRunnerStack
 			})
-
-			new Promise((reslove, reject) => {
+			return new Promise((reslove, reject) => {
 				setTimeout(() => {
 					this.setState({
 						showRunner: false
@@ -150,30 +184,13 @@ class Manager extends Component {
 					return reslove()
 				}, 4500)
 			})
-				.then(() => {
-					var { availableBoxs } = this.state
-					// console.log(availableBoxs)
-					var boxId = availableBoxs.pop()
-					if (availableBoxs.length === 0) {
-						for (var i = 0; i < numberOfBoxs; i++) {
-							availableBoxs.push(i)
-						}
-						availableBoxs = shuffle(availableBoxs)
-					}
-					this.setBox(boxId, { text: data })
-					this.setState({
-						availableBoxs
-					})
-				})
-
 		}
-		else {
-			// 重新啟動自動刷新
-			if (textRunnerStack.length === 0) {
-				this.setTextRunnerInterval(false)
-				this.setUpdateBoxDataFromDataStackInterval(true)
-			}
+		else if(data && textRunnerStack.length == 0){
+			return Promise.reject('NULL')
 		}
+		else{
+			return Promise.reject('WAIT')
+		}		
 	}
 
 	getRandomCoolData() {
@@ -188,82 +205,6 @@ class Manager extends Component {
 					this.boxRefs[refId].show(isShow)
 				})
 		}, randRange(350, 0))
-	}
-
-	fiilDataStack() {
-		// 使用靜態資源填充
-		let { dataStack } = this.state
-		for (var i = 0; i < dataStackLimit; i++) {
-			dataStack.unshift(this.getRandomCoolData())
-		}
-		// console.log(dataStack)
-		this.setState({
-			dataStack
-		})
-	}
-
-	connectSocket() {
-		let socket = openSocket.connect('http://140.120.13.250:5002')
-		let self = this
-		socket.on('server_response', function (msg) {
-			console.log(msg)
-			let { event = 'QUESTION', data = "NO_DATA" } = msg
-			var { dataStack, textRunnerStack } = self.state
-			var availableBoxs = [], i
-			if (event === 'QUESTION') {
-				if (textRunnerStack.length === 0) {
-					self.setUpdateBoxDataFromDataStackInterval(false)
-					for (i = 0; i < numberOfBoxs; i++) {
-						self.setBox(i, { isShow: false })
-						availableBoxs.push(i)
-					}
-					availableBoxs = shuffle(availableBoxs)
-					self.setState({
-						availableBoxs
-					})
-					self.setTextRunnerInterval(true)
-				}
-
-				dataStack.pop()
-				dataStack.unshift(data)
-
-				if (textRunnerStack.length <= textRunnerStackLimit) {
-					textRunnerStack.unshift(data)
-				}
-				self.setState({
-					dataStack,
-					textRunnerStack
-				})
-			}
-			else if (event === 'KEYWORD') {
-				console.log('event:KEYWORD')			
-				clearTimeout(self.keywordTextTimeout)
-				self.setState({
-					showKeyWordRunner:false,
-					keywordText:''
-				})
-				self.setState({
-					showKeyWordRunner:true,
-					keywordText:data+'請稍後，Querator正在生成問句🤨'
-				})
-				self.keywordTextTimeout = setTimeout(()=>{
-					self.setState({
-						showKeyWordRunner:false,
-						keywordText:''
-					})
-				},20000)
-			}
-			else if (event === 'NO_RESULT') {
-				toast(<span><span role="img" aria-label="emoji">😱</span>你考倒我啦<br/>您給的關鍵字我不太清楚<br/>請再輸入更完整一點的訊息～</span>, {
-					position: "bottom-center",
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true
-				});
-			}
-		});
-
 	}
 
 	updateBoxDataFromDataStack() {
@@ -289,11 +230,11 @@ class Manager extends Component {
 					pauseOnVisibilityChange
 					draggable
 					pauseOnHover
-				/>				
+				/>
 				<span className={`${showKeyWordRunner ? 'keyword-runner-bg' : 'hidden'}`}></span>
 				<span className={`${showKeyWordRunner ? 'keyword-runner' : 'hidden'}`}>{keywordText}</span>
-				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>				
-				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>				
+				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>
+				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
 				<div>
 					{boxs}
 				</div>
