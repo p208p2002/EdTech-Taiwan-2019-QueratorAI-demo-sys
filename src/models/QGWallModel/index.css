@@ -41,12 +41,12 @@ body {
 #Wall .keyword-runner{
     position: absolute;
     top: 0;
-    right: -600px;
+    right: -750px;
     font-size: 20px;
     display: inline-block;
-    width: 600px;
+    width: 750px;
     animation-name: keyword-runner-ani;
-    animation-duration: 20s;
+    animation-duration: 22s;
     animation-timing-function: linear;
     text-align: center;
     z-index: 2;
@@ -65,7 +65,7 @@ body {
 
 @keyframes keyword-runner-ani {
     0% {
-       right: -600px;
+       right: -750px;
     }
     100% {
         right: 100%;        

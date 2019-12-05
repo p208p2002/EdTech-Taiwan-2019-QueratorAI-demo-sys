@@ -59,7 +59,7 @@ class Manager extends Component {
 			'你知道嗎? ... Querator AI 是基於BERT的閱讀理解AI',
 			'你知道嗎? ... Querator AI 能生產出通順、高品質的問句',
 			'你知道嗎? ... Querator AI 擁有媲美人類專家的閱讀理解能力',
-			'你知道嗎? ... Querator AI 來自於UDIC LAB研發出來的問題產生模型',
+			'你知道嗎? ... Querator AI 是來自 UDIC LAB 研發出來的問題產生AI',
 			'你知道嗎? ... BERT是來自GOOGLE團隊的研究成果',
 			'你知道嗎? ... 掃描畫面下面的 QR CODE 可以獲得更多關於 Querator AI 的資訊',
 			'你知道嗎? ... 我們可以使用將 AI 產生的問句應用在教育產業',
@@ -75,13 +75,13 @@ class Manager extends Component {
 			this.setState({
 				showKeyWordRunner:false
 			})
-		},20000)
+		},22000)
 	}
 
 	setKeywordRunner(){
 		setInterval(()=>{
 			this.keywordRunnerEvent()
-		},30000)
+		},32000)
 	}
 
 	fiilDataStack() {
@@ -290,16 +290,6 @@ class Manager extends Component {
 						borderRadius:10
 					}}>
 					<br/>
-					{/* <img
-						src={qcode}
-						alt=""
-						srcSet=""
-						style={{
-							width: 185
-						}}
-					/>
-					<br/>
-					<small style={{position:'relative',top:-8,fontSize:10}}>了解更多關於我們的AI技術</small> */}
 					<h1 style={{ margin: 0, fontFamily: 'Vollkorn SC,serif' }}>Querator AI</h1>
 					<span style={{ fontFamily: '微軟正黑體', position: 'relative', top: '-8px' }}>
 						<small style={{ fontFamily: '"Vollkorn SC", serif', fontSize: '12px' }}>present by</small> <br />
@@ -324,7 +314,6 @@ class Manager extends Component {
 						padding:'0px 5px 0px 5px',
 						borderRadius:10
 					}}>
-					<br/>
 					<img
 						src={qcode}
 						alt=""
@@ -335,16 +324,6 @@ class Manager extends Component {
 					/>
 					<br/>
 					<small style={{position:'relative',top:-8,fontSize:10}}>了解更多關於我們的AI技術</small>
-					{/* <h1 style={{ margin: 0, fontFamily: 'Vollkorn SC,serif' }}>Querator AI</h1>
-					<span style={{ fontFamily: '微軟正黑體', position: 'relative', top: '-8px' }}>
-						<small style={{ fontFamily: '"Vollkorn SC", serif', fontSize: '12px' }}>present by</small> <br />
-					</span>
-					<span style={{
-						fontFamily: '微軟正黑體',
-						position: 'relative',
-						display: 'inline-block',
-						fontSize: '16px', top: '-10px', fontWeight: 600
-					}}>中興大學 UDIC LAB</span> */}
 				</div>
 
 			</div>
