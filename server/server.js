@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express')
 const app = express()
-const port = 5001
+const port = 7001
 // For Static File
 app.use(express.static('build'))
 // 404 Redirect to App(Front End Route will handle next)
