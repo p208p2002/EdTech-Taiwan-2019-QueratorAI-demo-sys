@@ -285,7 +285,7 @@ class Manager extends Component {
 						bottom: '5%',
 						zIndex: 1,
 						textShadow: '1px 1px white',
-						backgroundColor: 'rgba(255,255,255,0.8)',
+						// backgroundColor: 'rgba(255,255,255,0.8)',
 						padding:'0px 10px 0px 10px',
 						borderRadius:10
 					}}>
