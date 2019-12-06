@@ -317,7 +317,7 @@ class Manager extends Component {
 						alt=""
 						srcSet=""
 						style={{
-							width: 140
+							width: 115
 						}}
 					/>
 					<br/>
