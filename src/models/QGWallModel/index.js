@@ -272,7 +272,7 @@ class Manager extends Component {
 				<span className={`${showKeyWordRunner ? 'keyword-runner-bg' : 'hidden'}`}></span>
 				<span className={`${showKeyWordRunner ? 'keyword-runner' : 'hidden'}`}>{keywordText}</span>
 				<div className={`${showRunner ? 'high-light' : 'hidden'}`}></div>
-				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center">{textRunnerText}</h3></div>
+				<div className={`${showRunner ? 'high-light-text' : 'hidden'}`}><h3 className="text-center" style={{fontSize:34}}>{textRunnerText}</h3></div>
 				<div>
 					{boxs}
 				</div>
@@ -317,7 +317,7 @@ class Manager extends Component {
 						alt=""
 						srcSet=""
 						style={{
-							width: 185
+							width: 140
 						}}
 					/>
 					<br/>
