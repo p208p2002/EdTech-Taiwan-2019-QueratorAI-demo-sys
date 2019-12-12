@@ -155,6 +155,7 @@ class InputView extends Component {
                             <div className="bottom line"></div>
                         </div>
                     </div>
+                    <span style={{fontSize:10,position:'relative',top:-5}}><b>{submitDisable?'Querator AI 正在生成問句，請稍後在輸入':''}</b></span>
                     <span style={{ display: 'inline-block', height: 10 }} />
                     <div className="developers">
                         <div className="first">
