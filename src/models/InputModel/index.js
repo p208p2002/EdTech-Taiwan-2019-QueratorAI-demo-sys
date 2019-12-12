@@ -10,7 +10,7 @@ class InputView extends Component {
         this.state = {
             keyword: '',
             recentSearch: ['韓國瑜', '蔡英文', '柯文哲', '圖靈測試', '摩爾定律'],
-            submitDisable: false
+            submitDisable: false,
         };
         this.submitBtn = React.createRef
         this.submit = this.submit.bind(this)
@@ -31,9 +31,9 @@ class InputView extends Component {
 
         function active() {
             $(".button").on("click", function () {
-                setTimeout(() => {
-                    $(this).removeClass("active");
-                }, 1500)
+                // setTimeout(() => {
+                //     $(this).removeClass("active");
+                // }, 1500)
                 return $(this).addClass("active");
             });
         }
@@ -64,6 +64,9 @@ class InputView extends Component {
         }, { headers: { 'Content-Type': 'application/json; charset=utf-8' } })
             .then((res) => {
                 console.log(res)
+                this.setState({
+                    submitDisable:true
+                })
             })
             .catch((error) => {
                 let { response={} } = error,
@@ -78,6 +81,12 @@ class InputView extends Component {
                         draggable: true
                     });
                 }
+            })
+            .finally(()=>{
+                this.setState({
+                    submitDisable:false
+                })
+                $('.button').removeClass("active");
             })
     }
 
