@@ -83,10 +83,11 @@ class InputView extends Component {
                 }
             })
             .finally(()=>{
+                console.log('submitDisable enable')
+                $('.button').removeClass("active");
                 this.setState({
                     submitDisable:false
                 })
-                $('.button').removeClass("active");
             })
     }
 
