@@ -54,19 +54,12 @@ class InputView extends Component {
             keyword: '',
             recentSearch
         })
-        setTimeout(() => {
-            this.setState({
-                submitDisable: false
-            })
-        }, 3000)
+
         axios.post('http://140.120.13.250:5002/generate-question', {
             key: keyword
         }, { headers: { 'Content-Type': 'application/json; charset=utf-8' } })
             .then((res) => {
                 console.log(res)
-                this.setState({
-                    submitDisable:true
-                })
             })
             .catch((error) => {
                 let { response={} } = error,
